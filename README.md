@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center"><em>Modern CRM — Next.js 15 · TypeScript · Tailwind CSS · Redux · React Hook Form · Zod</em></p>
 
-## Getting Started
+<p align="center">
+  <a href="https://nextjs.org/">
+    <img src="https://img.shields.io/badge/Next.js-15-000?logo=next.js&logoColor=white" alt="Next.js 15" />
+  </a>
+  <a href="https://www.typescriptlang.org/">
+    <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white" alt="TypeScript" />
+  </a>
+  <a href="https://tailwindcss.com/">
+    <img src="https://img.shields.io/badge/Tailwind_CSS-3.x-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  </a>
+  <a href="https://redux.com/">
+    <img src="https://img.shields.io/badge/Redux%20Toolkit-764ABC?style=plastic&logo=redux&logoColor=white&labelColor=3E275B" alt="Redux" />
+  </a>
+  <a href="https://react-hook-form.com/">
+    <img src="https://img.shields.io/badge/React_Hook_Form-^7-EC5990?logo=reacthookform&logoColor=white" alt="React Hook Form" />
+  </a>
+  <a href="https://zod.dev/">
+    <img src="https://img.shields.io/badge/Zod-Validation-2A2A2A?logo=zod&logoColor=white" alt="Zod" />
+  </a>
+  <a href="https://redux.js.org/">
+  <img src="https://img.shields.io/badge/Redux-State_Management-764ABC?logo=redux&logoColor=white" alt="Redux" />
+</a>
 
-First, run the development server:
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**CRM** is a production-ready starter with a unified stack:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+⚛️ React (TypeScript) – Component-based UI development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+💨 Tailwind CSS – Utility-first styling framework
 
-## Learn More
+🧩 React Hook Form + Zod – Form state management and schema validation
 
-To learn more about Next.js, take a look at the following resources:
+🎯 Redux Toolkit – Global state with local persistence
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🧼 Prettier – Code formatting and consistency
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🧱 Headless UI & Lucide – Accessible components & icons
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Contributing
+Contributions are warmly welcomed!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feel free to fork this repo, create a feature branch, and submit a pull request.
+
+---
+
+## 🌻Developed by
+Azadeh Sharifi Soltani
