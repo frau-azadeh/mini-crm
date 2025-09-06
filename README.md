@@ -1,3 +1,5 @@
+# 🚀CRM
+
 <p align="center"><em>Modern CRM — Next.js 15 · TypeScript · Tailwind CSS · Redux · React Hook Form · Zod</em></p>
 
 <p align="center">
