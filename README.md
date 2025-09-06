@@ -43,8 +43,8 @@
 
 🧱 Headless UI & Lucide – Accessible components & icons
 
-
 ## 🤝 Contributing
+
 Contributions are warmly welcomed!
 
 Feel free to fork this repo, create a feature branch, and submit a pull request.
@@ -52,4 +52,5 @@ Feel free to fork this repo, create a feature branch, and submit a pull request.
 ---
 
 ## 🌻Developed by
+
 Azadeh Sharifi Soltani
