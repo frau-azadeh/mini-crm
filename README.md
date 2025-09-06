@@ -15,18 +15,6 @@
   <a href="https://redux.com/">
     <img src="https://img.shields.io/badge/Redux%20Toolkit-764ABC?style=plastic&logo=redux&logoColor=white&labelColor=3E275B" alt="Redux" />
   </a>
-  <a href="https://react-hook-form.com/">
-    <img src="https://img.shields.io/badge/React_Hook_Form-^7-EC5990?logo=reacthookform&logoColor=white" alt="React Hook Form" />
-  </a>
-  <a href="https://zod.dev/">
-    <img src="https://img.shields.io/badge/Zod-Validation-2A2A2A?logo=zod&logoColor=white" alt="Zod" />
-  </a>
-  <a href="https://redux.js.org/">
-  <img src="https://img.shields.io/badge/Redux-State_Management-764ABC?logo=redux&logoColor=white" alt="Redux" />
-</a>
-
-</p>
-
 ## Overview
 
 **CRM** is a production-ready starter with a unified stack:
