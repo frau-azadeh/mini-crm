@@ -5,7 +5,7 @@ import "../styles/fonts.css"
 
 export const metadata: Metadata = {
   title: "CRM",
-  description: "CRM",
+  description: "Redux Toolkit + RTK Query + RHF + Zod",
 };
 
 export default function RootLayout({
