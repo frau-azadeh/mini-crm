@@ -1,18 +1,18 @@
 export type Contact = {
-    id: number,
-    firstName: string,
-    lastName: string,
-}
+  id: number;
+  firstName: string;
+  lastName: string;
+};
 
 type DummyUserResponse = {
-    users: Array<{
-        id: number;
-        firstName: string;
-        lastName: string;
-        email: string;
-    }>
+  users: Array<{
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+  }>;
 
-    total: number;
-    skip: number;
-    limit: number;
-}
+  total: number;
+  skip: number;
+  limit: number;
+};
