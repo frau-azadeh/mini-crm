@@ -1,22 +1,20 @@
-"use client"
+"use client";
 
-import React, { useCallback, useMemo, useState } from 'react'
-import Button from './ui/Button'
+import React, { useCallback, useState } from "react";
 
-type Task = {
-  id: string; 
-  text: string;
-}
+import { Task } from "../../types/types";
+import ListTask from "./ListTask";
+import Button from "./ui/Button";
 
-const AddTask:React.FC = () => {
-  const[tasks, setTasks] = useState<Task[]>([])
-  const [inputValue, setInputValue] = useState<string>("")
+const AddTask: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
 
-  const handleChange = useCallback(
-    (e:React.ChangeEvent<HTMLInputElement>)=>{ setInputValue(e.target.value)
-    },[])
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  }, []);
 
-const handleAddTask = useCallback(() => {
+  const handleAddTask = useCallback(() => {
     if (!inputValue.trim()) return;
     const newTask: Task = {
       id: Date.now().toString(), // 👈 ساده‌ترین راه برای ساخت id یکتا
@@ -26,37 +24,19 @@ const handleAddTask = useCallback(() => {
     setInputValue("");
   }, [inputValue]);
 
-  const label = useMemo(()=>{
-    return `تعداد تسکها: ${tasks.length}`
-  },[tasks])
   return (
     <div>
-      <h2 className='font-bold text-gray-800'>تسک خود را اضافه کنید:</h2>
-      <input 
+      <h2 className="font-bold text-gray-800">تسک خود را اضافه کنید:</h2>
+      <input
         value={inputValue}
         onChange={handleChange}
-        placeholder='تسک جدید ...'
-        className='border rounded-md p-2 w-full'
+        placeholder="تسک جدید ..."
+        className="border rounded-md p-2 w-full"
       />
-      <Button
-        onClick={handleAddTask} 
-      >
-        اضافه 
-        </Button>
-        <div className='mt-4'>
-          <p className='font-bold text-gray-800'>{label}</p>
-          <ul>
-            {tasks.map((task)=>(
-              <li key={task.id} className='text-gray-700'>
-                {task.text}
-              </li>
-            ))}
-          </ul>
-
-        </div>
+      <Button onClick={handleAddTask}>اضافه</Button>
+      <ListTask tasks={tasks} />
     </div>
+  );
+};
 
-  )
-}
-
-export default AddTask
+export default AddTask;
