@@ -5,7 +5,7 @@ export default function Home() {
     <div>
       <main>
         <h1 className="text-red-600">به پشتیبانی خوش آمدید</h1>
-        <AddTask/>
+        <AddTask />
       </main>
     </div>
   );
