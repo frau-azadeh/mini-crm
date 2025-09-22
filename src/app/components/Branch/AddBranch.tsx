@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useMemo, useState } from "react";
 
 import { Branch } from "@/types/types";
@@ -34,7 +36,7 @@ const AddBranch: React.FC = () => {
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
-        اطلاعات شغب را وارد کنید:
+        اطلاعات شعب را وارد کنید:
       </h2>
       <div className="bg-white rounded-lg p-6 shadow-inner">
         <span className="block text-sm text-gray-600 mb-4">
@@ -65,7 +67,7 @@ const AddBranch: React.FC = () => {
           onChange={handleChange}
         />
 
-        <Button onClick={handleAdd}>شعبه جدید</Button>
+        <Button onClick={handleAdd}>ذخیره</Button>
       </div>
     </div>
   );
