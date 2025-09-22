@@ -26,3 +26,9 @@ export interface Branch {
   address: string;
   status: string;
 }
+
+export interface Ticket {
+  id: string;
+  title: string;
+  description: string;
+}
