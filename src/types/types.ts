@@ -10,3 +10,11 @@ export interface Lead {
   phone: string;
   address: string;
 }
+
+export interface User {
+  id: string;
+  name: string;
+  family: string;
+  userName: string;
+  password: string;
+}
