@@ -11,7 +11,7 @@ export interface Lead {
   address: string;
 }
 
-export interface User {
+export interface Admin {
   id: string;
   name: string;
   family: string;
