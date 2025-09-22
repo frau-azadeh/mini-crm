@@ -3,7 +3,7 @@ export type Task = {
   text: string;
 };
 
-export interface AddLead {
+export interface Lead {
   id: string;
   name: string;
   family: string;
