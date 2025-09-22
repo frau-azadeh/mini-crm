@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className="bg-indigo-50">
+      <body className="bg-white">
         <Toaster position="top-center" />
         {children}
       </body>
