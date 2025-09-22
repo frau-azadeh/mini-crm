@@ -18,3 +18,11 @@ export interface Admin {
   userName: string;
   password: string;
 }
+
+export interface Branch {
+  id: string;
+  city: string;
+  phone: string;
+  address: string;
+  status: string;
+}
