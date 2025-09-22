@@ -77,11 +77,7 @@ const AddLead: React.FC = () => {
           onChange={handleChange}
         />
 
-        <Button
-          onClick={handleAdd}
-        >
-          افزودن سرنخ
-        </Button>
+        <Button onClick={handleAdd}>افزودن سرنخ</Button>
       </div>
     </div>
   );
