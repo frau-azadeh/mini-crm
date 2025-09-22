@@ -25,16 +25,19 @@ const AddTask: React.FC = () => {
   }, [inputValue]);
 
   return (
-    <div>
-      <h2 className="font-bold text-gray-800">تسک خود را اضافه کنید:</h2>
+    <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
+          <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
+تسک خود را اضافه کنید:</h2>
+ <div className="bg-white rounded-lg p-6 shadow-inner">
       <input
         value={inputValue}
         onChange={handleChange}
         placeholder="تسک جدید ..."
-        className="border rounded-md p-2 w-full"
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
       />
       <Button onClick={handleAddTask}>اضافه</Button>
       <ListTask tasks={tasks} />
+    </div>
     </div>
   );
 };
