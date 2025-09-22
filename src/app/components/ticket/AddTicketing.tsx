@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 
@@ -59,8 +59,7 @@ const AddTicketing: React.FC = () => {
           rows={4}
           cols={5}
           onChange={handleChange}
-                    className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
-
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
         />
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
