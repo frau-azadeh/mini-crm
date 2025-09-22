@@ -79,7 +79,6 @@ const AddLead: React.FC = () => {
 
         <Button
           onClick={handleAdd}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-2 transition w-full sm:w-auto"
         >
           افزودن سرنخ
         </Button>
