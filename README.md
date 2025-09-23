@@ -15,7 +15,7 @@
   <a href="https://redux.com/">
     <img src="https://img.shields.io/badge/Redux%20Toolkit-764ABC?style=plastic&logo=redux&logoColor=white&labelColor=3E275B" alt="Redux" />
   </a>
-## Overview
+
 
 **CRM** is a production-ready starter with a unified stack:
 
