@@ -13,17 +13,14 @@ const AddTicketing: React.FC = () => {
     description: "",
   });
 
-const handleChange = useCallback(
-  (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const name = e.currentTarget.name as keyof Omit<Ticket, "id">;
-    const value = e.currentTarget.value;
-    setForm(prev => ({ ...prev, [name]: value }));
-  },
-  []
-);
-
-
-  
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const name = e.currentTarget.name as keyof Omit<Ticket, "id">;
+      const value = e.currentTarget.value;
+      setForm((prev) => ({ ...prev, [name]: value }));
+    },
+    [],
+  );
 
   const handleAdd = useCallback(() => {
     if (!form.title.trim()) return;
