@@ -15,8 +15,9 @@ const AddTicketing: React.FC = () => {
 
   const handleChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { title, value } = e.target;
-      setForm((prev) => ({ ...prev, [title]: value }));
+      const name = e.currentTarget.name as keyof Omit<Ticket, "id">;
+      const value = e.currentTarget.value;
+      setForm((prev) => ({ ...prev, [name]: value }));
     },
     [],
   );
@@ -58,6 +59,7 @@ const AddTicketing: React.FC = () => {
           name="description"
           rows={4}
           cols={5}
+          value={form.description}
           onChange={handleChange}
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
         />

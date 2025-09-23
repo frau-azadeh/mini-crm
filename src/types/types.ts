@@ -32,3 +32,13 @@ export interface Ticket {
   title: string;
   description: string;
 }
+
+export interface Sell {
+  id: string;
+  quantity: string;
+  name: string;
+  description: string;
+  madeIn: string;
+  sellPrice: string;
+  purchesPrice: string;
+}
