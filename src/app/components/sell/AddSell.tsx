@@ -1,4 +1,4 @@
-"useClient";
+"use client";
 
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 
@@ -21,7 +21,7 @@ const AddSell: React.FC = () => {
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const name = e.currentTarget.name as keyof Omit<Sell, "id">;
       const value = e.currentTarget.value;
-      setSell((prev) => ({ ...prev, [name]: value }));
+      setForm((prev) => ({ ...prev, [name]: value }));
     },
     [],
   );
@@ -34,8 +34,8 @@ const AddSell: React.FC = () => {
     };
     setSell((prev) => [...prev, newSell]);
     setForm({
-      quantity: "",
       name: "",
+      quantity: "",
       description: "",
       madeIn: "",
       sellPrice: "",
@@ -51,7 +51,7 @@ const AddSell: React.FC = () => {
       </h2>
       <div className="bg-white rounded-lg p-6 shadow-inner">
         <span className="block text-sm text-gray-600 mb-4">
-          تعداد اجناس وارد شده
+          تعداد اجناس وارد شده:{" "}
           <span className="font-semibold text-slate-700">({sellCount})</span>
         </span>
         <input
@@ -83,7 +83,7 @@ const AddSell: React.FC = () => {
           onChange={handleChange}
         />
         <input
-          name="purchasePrice"
+          name="purchesPrice"
           value={form.purchesPrice}
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
           placeholder="قیمت خرید"
