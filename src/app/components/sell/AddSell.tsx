@@ -1,0 +1,106 @@
+"use client";
+
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+
+import { Sell } from "@/types/types";
+
+import Button from "../ui/Button";
+
+const AddSell: React.FC = () => {
+  const [sell, setSell] = useState<Sell[]>([]);
+  const [form, setForm] = useState<Omit<Sell, "id">>({
+    quantity: "",
+    name: "",
+    description: "",
+    madeIn: "",
+    sellPrice: "",
+    purchesPrice: "",
+  });
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const name = e.currentTarget.name as keyof Omit<Sell, "id">;
+      const value = e.currentTarget.value;
+      setForm((prev) => ({ ...prev, [name]: value }));
+    },
+    [],
+  );
+
+  const handleAdd = useCallback(() => {
+    if (!form.name.trim()) return;
+    const newSell: Sell = {
+      id: Date.now().toString(),
+      ...form,
+    };
+    setSell((prev) => [...prev, newSell]);
+    setForm({
+      name: "",
+      quantity: "",
+      description: "",
+      madeIn: "",
+      sellPrice: "",
+      purchesPrice: "",
+    });
+  }, [form]);
+
+  const sellCount = useMemo(() => sell.length, [sell]);
+  return (
+    <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
+      <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
+        اجناس را وارد کنید:{" "}
+      </h2>
+      <div className="bg-white rounded-lg p-6 shadow-inner">
+        <span className="block text-sm text-gray-600 mb-4">
+          تعداد اجناس وارد شده:{" "}
+          <span className="font-semibold text-slate-700">({sellCount})</span>
+        </span>
+        <input
+          name="name"
+          value={form.name}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+          placeholder="نام محصول"
+          onChange={handleChange}
+        />
+        <input
+          name="quantity"
+          value={form.quantity}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          placeholder="تعداد"
+          onChange={handleChange}
+        />
+        <input
+          name="madeIn"
+          value={form.madeIn}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          placeholder="ساخت"
+          onChange={handleChange}
+        />
+        <input
+          name="sellPrice"
+          value={form.sellPrice}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          placeholder="قیمت فروش"
+          onChange={handleChange}
+        />
+        <input
+          name="purchesPrice"
+          value={form.purchesPrice}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          placeholder="قیمت خرید"
+          onChange={handleChange}
+        />
+        <textarea
+          name="description"
+          value={form.description}
+          rows={5}
+          cols={4}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          onChange={handleChange}
+        />
+        <Button onClick={handleAdd}>افزودن محصول</Button>
+      </div>
+    </div>
+  );
+};
+
+export default AddSell;
