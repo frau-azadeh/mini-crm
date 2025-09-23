@@ -1,8 +1,9 @@
-"useClient"
+"useClient";
 
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 
 import { Sell } from "@/types/types";
+
 import Button from "../ui/Button";
 
 const AddSell: React.FC = () => {
@@ -61,41 +62,40 @@ const AddSell: React.FC = () => {
           onChange={handleChange}
         />
         <input
-            name="quantity"
-            value={form.quantity}
-            className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
-            placeholder="تعداد"
-            onChange={handleChange}
+          name="quantity"
+          value={form.quantity}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          placeholder="تعداد"
+          onChange={handleChange}
         />
         <input
-            name="madeIn"
-            value={form.madeIn}
-             className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
-            placeholder="ساخت"
-            onChange={handleChange}
-
+          name="madeIn"
+          value={form.madeIn}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          placeholder="ساخت"
+          onChange={handleChange}
         />
         <input
-            name="sellPrice"
-            value={form.sellPrice}
-             className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
-            placeholder="قیمت فروش"
-            onChange={handleChange}
+          name="sellPrice"
+          value={form.sellPrice}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          placeholder="قیمت فروش"
+          onChange={handleChange}
         />
-       <input
-            name="purchasePrice"
-            value={form.purchesPrice}
-             className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
-            placeholder="قیمت خرید"
-            onChange={handleChange}
+        <input
+          name="purchasePrice"
+          value={form.purchesPrice}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          placeholder="قیمت خرید"
+          onChange={handleChange}
         />
         <textarea
-            name="description"
-            value={form.description}
-            rows={5}
-            cols={4}
-            className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
-            onChange={handleChange}
+          name="description"
+          value={form.description}
+          rows={5}
+          cols={4}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition "
+          onChange={handleChange}
         />
         <Button onClick={handleAdd}>افزودن محصول</Button>
       </div>
