@@ -1,7 +1,7 @@
-export type Task = {
-  id: string;
+export interface Task {
+  id: string | number;
   text: string;
-};
+}
 
 export interface Lead {
   id: string;
