@@ -39,9 +39,12 @@ const ListTaskTable: React.FC<ListTaskTableProps> = ({
     setEditingTask("");
   }, []);
 
-  const handleDelete = useCallback((id: Task["id"])=>{
-    onDelete?.(id)
-  },[onDelete])
+  const handleDelete = useCallback(
+    (id: Task["id"]) => {
+      onDelete?.(id);
+    },
+    [onDelete],
+  );
 
   return (
     <div className="mt-4">
@@ -72,14 +75,12 @@ const ListTaskTable: React.FC<ListTaskTableProps> = ({
                   {index + 1}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 w-full">
-             
                   {String(editingId) === String(task.id) ? (
                     <input
-                    value={editingTask}
-                    onChange={(e)=>setEditingTask(e.target.value)}
-                    className="w-full border rounded px-2 text-sm"
+                      value={editingTask}
+                      onChange={(e) => setEditingTask(e.target.value)}
                     />
-                  ):(
+                  ) : (
                     <span>{task.text}</span>
                   )}
                 </td>
@@ -101,9 +102,12 @@ const ListTaskTable: React.FC<ListTaskTableProps> = ({
                       >
                         ویرایش
                       </Button>
-                      <Button variant="danger"
-                        onClick={()=>handleDelete(task.id)}
-                      >حذف</Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDelete(task.id)}
+                      >
+                        حذف
+                      </Button>
                     </div>
                   )}
                 </td>
