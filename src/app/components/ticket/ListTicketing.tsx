@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 
-import { title } from "process";
-
 import { Ticket } from "@/types/types";
 
 import Button from "../ui/Button";
