@@ -21,7 +21,6 @@ const AddTask = () => {
     setInputValue("")
   },[inputValue])
 
-  const countTask = useMemo(()=>tasks.length,[tasks])
 
   return (
     <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
