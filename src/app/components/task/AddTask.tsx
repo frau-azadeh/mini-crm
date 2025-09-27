@@ -1,46 +1,53 @@
-"use client";
+"use client"
+import React, { useCallback, useMemo, useState } from 'react'
+import { Task } from '@/types/types'
+import Button from '../ui/Button'
+const AddTask = () => {
 
-import React, { useCallback, useState } from "react";
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [inputValue, setInputValue] = useState<string>("")
 
-import { Task } from "../../../types/types";
-import Button from "../ui/Button";
-import ListTask from "./ListTask";
+  const handleChange = useCallback((e:React.ChangeEvent<HTMLInputElement>)=>{
+    setInputValue(e.target.value)
+  },[])
 
-const AddTask: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [inputValue, setInputValue] = useState<string>("");
+  const   handleAddTask = useCallback(()=>{
+    if(!inputValue.trim()) return
+    const newTask: Task ={
+      id: Date.now().toString(),
+      text: inputValue.trim()
+    }
+    setTasks((prev)=> [...prev, newTask])
+    setInputValue("")
+  },[inputValue])
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  }, []);
-
-  const handleAddTask = useCallback(() => {
-    if (!inputValue.trim()) return;
-    const newTask: Task = {
-      id: Date.now().toString(), // 👈 ساده‌ترین راه برای ساخت id یکتا
-      text: inputValue,
-    };
-    setTasks((prev) => [...prev, newTask]);
-    setInputValue("");
-  }, [inputValue]);
+  const countTask = useMemo(()=>tasks.length,[tasks])
 
   return (
-    <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
-      <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
-        تسک خود را اضافه کنید:
+    <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
+      
+      <h2 className='font-bold text-white text-md md:text-xl mb-6'>
+        تسک خود را اضافه کنید!
       </h2>
-      <div className="bg-white rounded-lg p-6 shadow-inner">
+      <div className="bg-white rounded-lg p-6 shadow-inner mb-6">
+        <span className="block text-sm text-gray-600 mb-4">
+          تسک جدید: 
+          </span>
         <input
           value={inputValue}
           onChange={handleChange}
-          placeholder="تسک جدید ..."
+          placeholder='تسک جدید ...'
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
         />
-        <Button onClick={handleAddTask}>اضافه</Button>
-        <ListTask tasks={tasks} />
+        <div className='flex gap-2 items-center mb-4'>
+          <Button
+            onClick={handleAddTask}
+          >اضافه</Button>
+        </div>
+
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AddTask;
+export default AddTask
