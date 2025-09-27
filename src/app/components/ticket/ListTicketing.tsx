@@ -44,12 +44,23 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
     })
 
   },[])
+
+  const handleCancelEdit = useCallback(()=>{
+    setEditingId(null)
+    setEditData(null)
+  },[])
+
+  const handleSaveEdit = useCallback (()=>{
+    if(editingId === null || !editData) return
+    onEdit?.(editingId, editData)
+    setEditingId(null)
+    setEditData(null)
+  },[editData,onEdit, editingId])
   return (
     <div className="mt-4">
       <p className="font-bold text-white mb-2">
         تعداد تیکتهای ثبت شده{countTickets}
       </p>
-      <div>
         <div className="overflow-x-auto border rounded-md">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -81,34 +92,46 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
               )}
               {tickets.map((ticket, index) => (
                 <tr key={ticket.id}>
-                  <td className="px-4 py-3 text-right text-sm text-gray-600">
+                    <td className="px-4 py-3 text-right text-sm text-gray-600">
                     {index + 1}
                   </td>
+
                   <td className="px-4 py-3 text-right text-sm text-gray-700 w-full">
                     {String(editingId) === String(ticket.id) ? (
                       <input
                         name="title"
                         value={editData?.title ?? ""}
-                        className="w-full border rounded px-2 text-sm"
+                        className="w-full border rounded px-2 py-1 text-sm"
                         onChange={handleFieldChange}
                       />
                     ) : (
                       <span>{ticket.title}</span>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-right text-sm text-gray-700 w-full">
+                  <td className="px-4 py-3 text-right text-sm text-gray-600 w-1/2">
                     {String(editingId) === String(ticket.id) ? (
-                      <input
+                      <textarea
                         value={editData?.description ?? ""}
                         name="description"
-                        className="w-full border rounded px-2 text-sm"
+                        className="w-full border rounded px-2 py-1 text-sm"
+                        onChange={handleFieldChange}
+                        rows={3}
+                       
                       />
                     ) : (
-                      <span>{ticket.description}</span>
+                                           <span className="block text-sm text-gray-700 whitespace-pre-wrap">
+{ticket.description}</span>
                     )}
                   </td>
                   <td className="px-4 py-3 text-center text-sm">
+                    {String(editingId) === String(ticket.id)?(
                     <div className="flex items-center justify-center gap-2">
+                        <Button onClick={handleSaveEdit} variant="call">ذخیره</Button>
+                        <Button onClick={handleCancelEdit} variant="danger">انصراف</Button>
+                      </div>
+                    ):(
+                   
+                      <div className="flex items-center justify-center gap-2">
                       <Button variant="call" onClick={()=>handleStartEdit(ticket)}>ویرایش</Button>
                       <Button
                         variant="danger"
@@ -117,6 +140,7 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
                         حذف
                       </Button>
                     </div>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -124,7 +148,6 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
           </table>
         </div>
       </div>
-    </div>
   );
 };
 
