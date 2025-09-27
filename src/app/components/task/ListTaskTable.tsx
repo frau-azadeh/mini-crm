@@ -79,7 +79,6 @@ const ListTaskTable: React.FC<ListTaskTableProps> = ({
                     <input
                       value={editingTask}
                       onChange={(e) => setEditingTask(e.target.value)}
-                      className="w-full border rounded px-2 text-sm"
                     />
                   ) : (
                     <span>{task.text}</span>
