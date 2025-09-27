@@ -28,7 +28,7 @@ const ListTaskTable: React.FC<ListTaskTableProps> = ({
   );
 
   const handleSaveEdit = useCallback(() => {
-    if (editingId === null ) return;
+    if (editingId === null) return;
     onEdit?.(editingId, editingTask);
     setEditingId(null);
     setEditingTask("");
