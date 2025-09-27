@@ -5,6 +5,7 @@ import React, { ChangeEvent, useCallback, useState } from "react";
 import { Ticket } from "@/types/types";
 
 import Button from "../ui/Button";
+import ListTicketing from "./ListTicketing";
 
 const AddTicketing: React.FC = () => {
   const [ticket, setTicket] = useState<Ticket[]>([]);
@@ -58,6 +59,7 @@ const AddTicketing: React.FC = () => {
         />
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
+      <ListTicketing tickets={ticket}/>
     </div>
   );
 };
