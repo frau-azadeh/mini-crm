@@ -40,6 +40,11 @@ const AddTicketing: React.FC = () => {
   const handleDelete = useCallback((id: Ticket["id"]) => {
     setTicket((prev) => prev.filter((t) => String(t.id) !== String(id)));
   }, []);
+
+  const handleEdit = useCallback((id:Ticket["id"], newData:Omit<Ticket,"id">)=>{
+setTicket((prev)=>prev.map((t)=>String(t.id)===String(id)?{...t,...newData}:t
+))
+  },[])
   return (
     <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
@@ -63,7 +68,7 @@ const AddTicketing: React.FC = () => {
         />
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
-      <ListTicketing tickets={ticket} onDelete={handleDelete} />
+      <ListTicketing tickets={ticket} onDelete={handleDelete} onEdit={handleEdit}/>
     </div>
   );
 };
