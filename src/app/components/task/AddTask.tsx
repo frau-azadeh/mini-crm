@@ -2,6 +2,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { Task } from '@/types/types'
 import Button from '../ui/Button'
+import ListTaskTable from './ListTaskTable'
 const AddTask = () => {
 
   const [tasks, setTasks] = useState<Task[]>([])
@@ -43,7 +44,7 @@ const AddTask = () => {
             onClick={handleAddTask}
           >اضافه</Button>
         </div>
-
+<ListTaskTable tasks={tasks}/>
       </div>
     </div>
   )
