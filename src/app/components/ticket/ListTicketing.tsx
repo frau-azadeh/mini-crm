@@ -1,4 +1,6 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+
+import { title } from "process";
 
 import { Ticket } from "@/types/types";
 
@@ -24,6 +26,24 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
     [onDelete],
   );
   const countTickets = useMemo(() => tickets.length, [tickets]);
+
+  const handleFieldChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      if (!editData) return;
+      const name = e.currentTarget.name as keyof Omit<Ticket, "id">;
+      const value = e.currentTarget.value;
+      setEditData({ ...editData, [name]: value });
+    },
+    [editData],
+  );
+
+  const handleStartEdit = useCallback((ticket: Ticket)=>{
+    setEditingId(ticket.id)
+    setEditData({title:ticket.title,
+      description:ticket.description
+    })
+
+  },[])
   return (
     <div className="mt-4">
       <p className="font-bold text-white mb-2">
@@ -65,14 +85,31 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
                     {index + 1}
                   </td>
                   <td className="px-4 py-3 text-right text-sm text-gray-700 w-full">
-                    {ticket.title}
+                    {String(editingId) === String(ticket.id) ? (
+                      <input
+                        name="title"
+                        value={editData?.title ?? ""}
+                        className="w-full border rounded px-2 text-sm"
+                        onChange={handleFieldChange}
+                      />
+                    ) : (
+                      <span>{ticket.title}</span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-right text-sm text-gray-700 w-full">
-                    {ticket.description}
+                    {String(editingId) === String(ticket.id) ? (
+                      <input
+                        value={editData?.description ?? ""}
+                        name="description"
+                        className="w-full border rounded px-2 text-sm"
+                      />
+                    ) : (
+                      <span>{ticket.description}</span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-center text-sm">
                     <div className="flex items-center justify-center gap-2">
-                      <Button variant="call">ویرایش</Button>
+                      <Button variant="call" onClick={()=>handleStartEdit(ticket)}>ویرایش</Button>
                       <Button
                         variant="danger"
                         onClick={() => handleDelete(ticket.id)}
