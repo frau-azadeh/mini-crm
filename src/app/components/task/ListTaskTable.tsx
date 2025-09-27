@@ -28,7 +28,13 @@ const ListTaskTable:React.FC<ListTaskTableProps> = ({tasks}) => {
 {task.text}</td>
               </tr>
             ))}
-
+{tasks.length === 0 &&(
+  <tr>
+    <td colSpan={3} className='text-center text-gray-500 px-4 py-6'>
+        <p>هیچ تسکی وجود ندارد</p>
+    </td>
+  </tr>
+)}
           </tbody>
         </table>
       </div>
