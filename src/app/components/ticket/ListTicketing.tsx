@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { Ticket } from "@/types/types";
 
@@ -14,6 +14,15 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
   onEdit,
   onDelete,
 }) => {
+  const [editingId, setEditingId] = useState<Ticket["id"] | null>(null);
+  const [editData, setEditData] = useState<Omit<Ticket, "id"> | null>(null);
+
+  const handleDelete = useCallback(
+    (id: Ticket["id"]) => {
+      onDelete?.(id);
+    },
+    [onDelete],
+  );
   const countTickets = useMemo(() => tickets.length, [tickets]);
   return (
     <div className="mt-4">
@@ -64,7 +73,12 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
                   <td className="px-4 py-3 text-center text-sm">
                     <div className="flex items-center justify-center gap-2">
                       <Button variant="call">ویرایش</Button>
-                      <Button variant="danger">حذف</Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDelete(ticket.id)}
+                      >
+                        حذف
+                      </Button>
                     </div>
                   </td>
                 </tr>
