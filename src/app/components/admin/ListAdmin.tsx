@@ -30,27 +30,27 @@ const ListAdmin: React.FC<ListAdminTableProps> = ({
       if (!editData) return;
       const name = e.currentTarget.name as keyof Omit<Admin, "id">;
       const value = e.currentTarget.value;
-      setEditData(prev => prev ? { ...prev, [name]: value } : prev);
+      setEditData((prev) => (prev ? { ...prev, [name]: value } : prev));
     },
     [editData],
   );
-  const handleStartEdit = useCallback((admin:Admin) => {
-setEditingId(admin.id)
-setEditData({
-    name: admin.name,
-    family: admin.family,
-    userName: admin.userName,
-    password: admin.password
-})
+  const handleStartEdit = useCallback((admin: Admin) => {
+    setEditingId(admin.id);
+    setEditData({
+      name: admin.name,
+      family: admin.family,
+      userName: admin.userName,
+      password: admin.password,
+    });
   }, []);
 
-  const handleCancelEdit = useCallback(()=>{
-    setEditingId(null)
-    setEditData(null)
-  },[])
+  const handleCancelEdit = useCallback(() => {
+    setEditingId(null);
+    setEditData(null);
+  }, []);
 
-  const handleSaveEdit = useCallback(()=>{
-   if (editingId === null || !editData) return;
+  const handleSaveEdit = useCallback(() => {
+    if (editingId === null || !editData) return;
     onEdit?.(editingId, editData);
     setEditingId(null);
     setEditData(null);
