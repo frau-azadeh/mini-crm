@@ -1,12 +1,12 @@
 "use client"
 
 import { Branch } from '@/types/types'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useMemo} from 'react'
 import Button from '../ui/Button'
 
 const AddBranch:React.FC = () => {
 
-  const[branch, setBranch] = useState<Branch[]>([])
+  const[branchs, setBranchs] = useState<Branch[]>([])
   const[form, setForm] = useState<Omit<Branch, "id">>({
     city:"",
     phone:"",
@@ -26,7 +26,7 @@ const AddBranch:React.FC = () => {
       id: Date.now().toString(),
       ...form
     }
-    setBranch((prev)=>[...prev, newBranch])
+    setBranchs((prev)=>[...prev, newBranch])
     setForm({
       city:"",
       phone:"",
@@ -34,9 +34,11 @@ const AddBranch:React.FC = () => {
       status:""
     })
   },[form])
+
+    const countBranch = useMemo(()=>branchs.length,[branchs])
   return (
     <div className='mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg rounded-xl md:p-8'>
-      <h2 className='font-bold text-white text-xl md:text-2xl mb-6'>اطلاعات شعب را وارد کنید!</h2>
+      <h2 className='font-bold text-white text-xl md:text-2xl mb-6'>اطلاعات شعب را وارد کنید!{countBranch}</h2>
       <div className='bg-white rounded-lg p-6 shadow-inner'>
         <input
           name='city'
