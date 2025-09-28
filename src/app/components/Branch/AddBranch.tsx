@@ -77,7 +77,7 @@ const AddBranch: React.FC = () => {
 
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
-      <ListBranch branches={branches}/>
+      <ListBranch branches={branches} />
     </div>
   );
 };
