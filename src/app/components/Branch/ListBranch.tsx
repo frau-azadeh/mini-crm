@@ -6,9 +6,10 @@ import Button from "../ui/Button";
 
 interface ListBranchTableProps {
   branches: Branch[];
-  onDelete: (id: Branch["id"]) => void;
+  onDelete?: (id: Branch["id"]) => void;
+  onEdit?:(id: Branch["id"], newData: Omit<Branch,"id">)=> void
 }
-const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
+const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete, onEdit }) => {
   const [editingId, setEditingId] = useState<Branch["id"] | null>(null);
   const [editData, setEditData] = useState<Omit<Branch, "id"> | null>(null);
 
@@ -30,6 +31,29 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
     },
     [editData],
   );
+
+  const handleCancelEdit = useCallback(()=>{
+    setEditData(null)
+    setEditingId(null)
+  },[])
+
+  const handleStartEdit = useCallback((branch: Branch)=>{
+    setEditingId(branch.id)
+    setEditData({
+      city: branch.city,
+      address: branch.address,
+      phone:branch.phone,
+      status: branch.status
+    })
+  },[])
+
+  const handleSaveEdit = useCallback(()=>{
+    if(!editData || editingId=== null) return
+
+    onEdit?.(editingId, editData)
+    setEditingId(null)
+    setEditData(null)
+  },[editData, editingId, onEdit])
 
   return (
     <div className="mt-4">
@@ -127,8 +151,14 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
                   
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                  {String(editData)=== String(branch.id)?(
+                    <div className="flex items-center justify-center gap-2">
+                      <Button variant="call" onClick={handleSaveEdit}>ذخیره</Button>
+                      <Button variant="danger" onClick={handleCancelEdit}>انصراف</Button>
+</div>
+                  ):(
                   <div className="flex gap-2 items-center justify-center">
-                    <Button variant="call">ویرایش</Button>
+                    <Button variant="call" onClick={()=>handleStartEdit(branch)}>ویرایش</Button>
                     <Button
                       variant="danger"
                       onClick={() => handelDelete(branch.id)}
@@ -136,6 +166,7 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
                       حذف
                     </Button>
                   </div>
+                  )}
                 </td>
               </tr>
             ))}
