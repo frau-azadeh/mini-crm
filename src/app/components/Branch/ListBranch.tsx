@@ -9,7 +9,7 @@ interface ListBranchTableProps {
   onDelete: (id: Branch["id"]) => void;
 }
 const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
-  const [editId, setEditingId] = useState<Branch["id"] | null>(null);
+  const [editingId, setEditingId] = useState<Branch["id"] | null>(null);
   const [editData, setEditData] = useState<Omit<Branch, "id"> | null>(null);
 
   const countBranches = useMemo(() => branches.length, [branches]);
@@ -72,19 +72,59 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
             {branches.map((branch, index) => (
               <tr key={branch.id}>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                 
                   {index + 1}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {branch.city}
+                   {String(editingId) === String(branch.id)?(
+                    <input
+                      name="city"
+                      value={editData?.city??""}
+                      onChange={handleFieldChange}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                    />
+                  ):(
+                    <span>{branch.city}</span>
+                  )}
+
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {branch.address}
+                  {String(editData)=== String(branch.id)?(
+                    <input
+                      name="address"
+                      value={editData?.address??""}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange}
+                    />
+                  ):(
+                    <span>{branch.address}</span>
+                  )}
+                  
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {branch.phone}
+                  {String(editData) === String(branch.id)?(
+                    <input
+                    className="w-full border rounded px-2 py-1 text-sm"
+                    name="phone"
+                    value={editData?.phone}
+                    onChange={handleFieldChange}
+                    />
+                  ):(
+                    <span>{branch.phone}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {branch.status}
+                  {String(editData)=== String(branch.id)?(
+                    <input
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      name="status"
+                      value={editData?.status??""}
+                      onChange={handleFieldChange}
+                    />
+                  ):(
+                    <span>{branch.status}</span>
+                  )}
+                  
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
                   <div className="flex gap-2 items-center justify-center">
