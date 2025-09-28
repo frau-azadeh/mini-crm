@@ -41,6 +41,10 @@ const AddAdmin: React.FC = () => {
     setAdmin((prev) => prev.filter((t) => String(t.id) !== String(id)));
   }, []);
 
+  const handleEdit = useCallback((id: Admin["id"], newData: Omit<Admin,"id">)=>{
+    setAdmin((prev)=>prev.map((t)=>String(t.id)===String(id)?{...t, ...newData}:t)
+  )},[])
+
   return (
     <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
@@ -81,7 +85,7 @@ const AddAdmin: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن ادمین</Button>
       </div>
-      <ListAdmin admins={admin} onDelete={handleDelete} />
+      <ListAdmin admins={admin} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 };
