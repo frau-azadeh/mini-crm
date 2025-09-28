@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 
 import { Admin } from "@/types/types";
+
 import Button from "../ui/Button";
 
 interface ListAdminTableProps {
@@ -13,15 +14,26 @@ const ListAdmin: React.FC<ListAdminTableProps> = ({
   onEdit,
   onDelete,
 }) => {
-
-    const [editingId, setEditingId] = useState <Admin["id"] | null>(null)
-    const [editData, setEditData] = useState<Omit<Admin, "id">|null>(null)
+  const [editingId, setEditingId] = useState<Admin["id"] | null>(null);
+  const [editData, setEditData] = useState<Omit<Admin, "id"> | null>(null);
   const countAdmin = useMemo(() => admins.length, [admins]);
 
+  const handleDelete = useCallback(
+    (id: Admin["id"]) => {
+      onDelete?.(id);
+    },
+    [onDelete],
+  );
 
-  const handleDelete = useCallback((id: Admin["id"])=>{
-    onDelete?.(id)
-  },[onDelete])
+  const handleFieldChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (!editData) return;
+      const name = e.currentTarget.name as keyof Omit<Admin, "id">;
+      const value = e.currentTarget.value;
+      setEditData({ ...editData, [name]: value });
+    },
+    [editData],
+  );
 
   return (
     <div className="mt-4">
@@ -53,31 +65,83 @@ const ListAdmin: React.FC<ListAdminTableProps> = ({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-100">
-            {admins.length === 0 &&(
-                <tr>
-                    <td colSpan={6} 
-                    className="px-4 py-6 text-center text-sm text-gray-500"
-                    >
-                        <p>هیچ ادمینی ثبت نشده است!</p>
-                    </td>
-                </tr>
+            {admins.length === 0 && (
+              <tr>
+                <td
+                  colSpan={6}
+                  className="px-4 py-6 text-center text-sm text-gray-500"
+                >
+                  <p>هیچ ادمینی ثبت نشده است!</p>
+                </td>
+              </tr>
             )}
-            {admins.map((admin, index)=>(
-                <tr key={admin.id}>
-                    <td className="px-4 py-3 text-right text-sm text-gray-700 ">{index+1}</td>
-                    <td className="px-4 py-3 text-right text-sm text-gray-700">{admin.name}</td>
-                    <td className="px-4 py-3 text-right text-sm text-gray-700 ">{admin.family}</td>
-                    <td className="px-4 py-3 text-right text-sm text-gray-700 ">{admin.userName}</td>
-                    <td className="px-4 py-3 text-right text-sm text-gray-700 ">{admin.password}</td>
-                    <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                        <div className="flex items-center gap-2 justify-center">
-                            <Button variant="call">ویرایش</Button>
-                            <Button variant="danger" onClick={()=>handleDelete(admin.id)}>حذف</Button>
-                        </div>
-                    </td>
-                </tr>
+            {admins.map((admin, index) => (
+              <tr key={admin.id}>
+                <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                  {index + 1}
+                </td>
+                <td className="px-4 py-3 text-right text-sm text-gray-700">
+                  {String(editingId) === String(admin.id) ? (
+                    <input
+                      name="name"
+                      value={editData?.name ?? ""}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange}
+                    />
+                  ) : (
+                    <span>{admin.name}</span>
+                  )}
+                </td>
+                <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                  {String(editData) === String(admin.id) ? (
+                    <input
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      name="family"
+                      value={editData?.family ?? ""}
+                      onChange={handleFieldChange}
+                    />
+                  ) : (
+                    <span>{admin.family}</span>
+                  )}
+                </td>
+                <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                  {String(editData) === String(admin.id) ? (
+                    <input 
+                        className="w-full border rounded px-2 py-1 text-sm"
+                        name="userName"
+                        value={editData?.userName??""}
+                        onChange={handleFieldChange}
+                    />
+                  ) : (
+                    <span>{admin.userName}</span>
+                  )}
+                </td>
+                <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                  {String(editData)===String(admin.id)?(
+                    <input
+                        name="password"
+                        value={editData?.password??""}
+                        className="w-full border rounded px-2 py-1 text-sm"
+                        onChange={handleFieldChange}
+                    />
+                  ):(
+                  <span> {admin.password}</span>
+                 
+                 )}
+                </td>
+                <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                  <div className="flex items-center gap-2 justify-center">
+                    <Button variant="call">ویرایش</Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(admin.id)}
+                    >
+                      حذف
+                    </Button>
+                  </div>
+                </td>
+              </tr>
             ))}
-            
           </tbody>
         </table>
       </div>
