@@ -48,7 +48,7 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells }) => {
             {sells.length === 0 &&(
                   <tr>
                 <td
-                  colSpan={7}
+                  colSpan={8}
                   className="px-4 py-6 text-center text-sm text-gray-500"
                 >
                 <p>هیچ محصولی ثبت نشده</p>
