@@ -1,7 +1,5 @@
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 
-import { title } from "process";
-
 import { Ticket } from "@/types/types";
 
 import Button from "../ui/Button";
@@ -32,7 +30,7 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
       if (!editData) return;
       const name = e.currentTarget.name as keyof Omit<Ticket, "id">;
       const value = e.currentTarget.value;
-      setEditData({ ...editData, [name]: value });
+      setEditData((prev) => (prev ? { ...prev, [name]: value } : prev));
     },
     [editData],
   );

@@ -5,6 +5,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { Admin } from "@/types/types";
 
 import Button from "../ui/Button";
+import ListAdmin from "./ListAdmin";
 
 const AddAdmin: React.FC = () => {
   const [admin, setAdmin] = useState<Admin[]>([]);
@@ -15,11 +16,6 @@ const AddAdmin: React.FC = () => {
     password: "",
   });
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  }, []);
-
   const handleAdd = useCallback(() => {
     if (!form.name.trim()) return;
 
@@ -28,20 +24,40 @@ const AddAdmin: React.FC = () => {
       ...form,
     };
     setAdmin((prev) => [...prev, newAdmin]);
-    setForm({ name: "", family: "", userName: "", password: "" });
+    setForm({
+      name: "",
+      family: "",
+      userName: "",
+      password: "",
+    });
   }, [form]);
 
-  const countAdmin = useMemo(() => admin.length, [admin]);
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }, []);
+
+  const handleDelete = useCallback((id: Admin["id"]) => {
+    setAdmin((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
+
+  const handleEdit = useCallback(
+    (id: Admin["id"], newData: Omit<Admin, "id">) => {
+      setAdmin((prev) =>
+        prev.map((t) =>
+          String(t.id) === String(id) ? { ...t, ...newData } : t,
+        ),
+      );
+    },
+    [],
+  );
+
   return (
-    <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
+    <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
-        اطلاعات ادمین ها را وارد نمایید
+        اطلاعات ادمین را وارد کنید!
       </h2>
       <div className="bg-white rounded-lg p-6 shadow-inner">
-        <span className="block text-sm text-gray-600 mb-4">
-          تعداد ادمین های اضافه شده :{" "}
-          <span className="font-semibold text-slate-700">{countAdmin}</span>
-        </span>
         <input
           name="name"
           value={form.name}
@@ -53,9 +69,9 @@ const AddAdmin: React.FC = () => {
         <input
           name="family"
           value={form.family}
-          placeholder="نام خانوادگی"
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
           onChange={handleChange}
+          placeholder="نام خانوادگی"
         />
 
         <input
@@ -69,13 +85,14 @@ const AddAdmin: React.FC = () => {
         <input
           name="password"
           value={form.password}
-          placeholder="پسورد"
-          type="password"
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+          placeholder="رمز عبور"
+          type="password"
           onChange={handleChange}
         />
         <Button onClick={handleAdd}>افزودن ادمین</Button>
       </div>
+      <ListAdmin admins={admin} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 };
