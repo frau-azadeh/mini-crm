@@ -37,9 +37,9 @@ const AddBranch: React.FC = () => {
     });
   }, [form]);
 
-  const handleDelete = useCallback((id: Branch["id"])=>{
-    setBranches((prev)=>prev.filter((t)=>String(t.id)!==String(id)))
-  },[])
+  const handleDelete = useCallback((id: Branch["id"]) => {
+    setBranches((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg rounded-xl md:p-8">
@@ -81,7 +81,7 @@ const AddBranch: React.FC = () => {
 
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
-      <ListBranch branches={branches} onDelete={handleDelete}/>
+      <ListBranch branches={branches} onDelete={handleDelete} />
     </div>
   );
 };

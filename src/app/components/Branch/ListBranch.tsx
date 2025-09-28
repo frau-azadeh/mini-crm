@@ -6,24 +6,30 @@ import Button from "../ui/Button";
 
 interface ListBranchTableProps {
   branches: Branch[];
-  onDelete: (id: Branch["id"])=> void
+  onDelete: (id: Branch["id"]) => void;
 }
 const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
-  const[editId, setEditingId] = useState<Branch["id"] |null>(null)
-  const[editData, setEditData] = useState<Omit<Branch, "id">| null>(null)
+  const [editId, setEditingId] = useState<Branch["id"] | null>(null);
+  const [editData, setEditData] = useState<Omit<Branch, "id"> | null>(null);
 
   const countBranches = useMemo(() => branches.length, [branches]);
 
-  const handelDelete = useCallback((id: Branch["id"])=>{
-    onDelete?.(id)
-  },[onDelete])
+  const handelDelete = useCallback(
+    (id: Branch["id"]) => {
+      onDelete?.(id);
+    },
+    [onDelete],
+  );
 
-  const handleFieldChange = useCallback((e: React.ChangeEvent<HTMLInputElement>)=>{
-    if(!editData) return
-    const name = e.currentTarget.name as keyof Omit<Branch, "id">
-    const value = e.currentTarget.value
-    setEditData((prev)=>prev?{...prev,[name]:value}:prev)
-  }, [editData])
+  const handleFieldChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!editData) return;
+      const name = e.currentTarget.name as keyof Omit<Branch, "id">;
+      const value = e.currentTarget.value;
+      setEditData((prev) => (prev ? { ...prev, [name]: value } : prev));
+    },
+    [editData],
+  );
 
   return (
     <div className="mt-4">
@@ -83,7 +89,12 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
                   <div className="flex gap-2 items-center justify-center">
                     <Button variant="call">ویرایش</Button>
-                    <Button variant="danger" onClick={()=>handelDelete(branch.id)}>حذف</Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handelDelete(branch.id)}
+                    >
+                      حذف
+                    </Button>
                   </div>
                 </td>
               </tr>
