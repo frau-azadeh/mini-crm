@@ -7,9 +7,13 @@ import Button from "../ui/Button";
 interface ListBranchTableProps {
   branches: Branch[];
   onDelete?: (id: Branch["id"]) => void;
-  onEdit?:(id: Branch["id"], newData: Omit<Branch,"id">)=> void
+  onEdit?: (id: Branch["id"], newData: Omit<Branch, "id">) => void;
 }
-const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete, onEdit }) => {
+const ListBranch: React.FC<ListBranchTableProps> = ({
+  branches,
+  onDelete,
+  onEdit,
+}) => {
   const [editingId, setEditingId] = useState<Branch["id"] | null>(null);
   const [editData, setEditData] = useState<Omit<Branch, "id"> | null>(null);
 
@@ -32,28 +36,28 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete, onEdit
     [editData],
   );
 
-  const handleCancelEdit = useCallback(()=>{
-    setEditData(null)
-    setEditingId(null)
-  },[])
+  const handleCancelEdit = useCallback(() => {
+    setEditData(null);
+    setEditingId(null);
+  }, []);
 
-  const handleStartEdit = useCallback((branch: Branch)=>{
-    setEditingId(branch.id)
+  const handleStartEdit = useCallback((branch: Branch) => {
+    setEditingId(branch.id);
     setEditData({
       city: branch.city,
       address: branch.address,
-      phone:branch.phone,
-      status: branch.status
-    })
-  },[])
+      phone: branch.phone,
+      status: branch.status,
+    });
+  }, []);
 
-  const handleSaveEdit = useCallback(()=>{
-    if(!editData || editingId=== null) return
+  const handleSaveEdit = useCallback(() => {
+    if (!editData || editingId === null) return;
 
-    onEdit?.(editingId, editData)
-    setEditingId(null)
-    setEditData(null)
-  },[editData, editingId, onEdit])
+    onEdit?.(editingId, editData);
+    setEditingId(null);
+    setEditData(null);
+  }, [editData, editingId, onEdit]);
 
   return (
     <div className="mt-4">
@@ -96,76 +100,81 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete, onEdit
             {branches.map((branch, index) => (
               <tr key={branch.id}>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                 
                   {index + 1}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                   {String(editingId) === String(branch.id)?(
+                  {String(editingId) === String(branch.id) ? (
                     <input
                       name="city"
-                      value={editData?.city??""}
+                      value={editData?.city ?? ""}
                       onChange={handleFieldChange}
                       className="w-full border rounded px-2 py-1 text-sm"
                     />
-                  ):(
+                  ) : (
                     <span>{branch.city}</span>
                   )}
-
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editingId)=== String(branch.id)?(
+                  {String(editingId) === String(branch.id) ? (
                     <input
                       name="address"
-                      value={editData?.address??""}
+                      value={editData?.address ?? ""}
                       className="w-full border rounded px-2 py-1 text-sm"
                       onChange={handleFieldChange}
                     />
-                  ):(
+                  ) : (
                     <span>{branch.address}</span>
                   )}
-                  
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editingId) === String(branch.id)?(
+                  {String(editingId) === String(branch.id) ? (
                     <input
-                    className="w-full border rounded px-2 py-1 text-sm"
-                    name="phone"
-                    value={editData?.phone}
-                    onChange={handleFieldChange}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      name="phone"
+                      value={editData?.phone}
+                      onChange={handleFieldChange}
                     />
-                  ):(
+                  ) : (
                     <span>{branch.phone}</span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editingId)=== String(branch.id)?(
+                  {String(editingId) === String(branch.id) ? (
                     <input
                       className="w-full border rounded px-2 py-1 text-sm"
                       name="status"
-                      value={editData?.status??""}
+                      value={editData?.status ?? ""}
                       onChange={handleFieldChange}
                     />
-                  ):(
+                  ) : (
                     <span>{branch.status}</span>
                   )}
-                  
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editingId)=== String(branch.id)?(
+                  {String(editingId) === String(branch.id) ? (
                     <div className="flex items-center justify-center gap-2">
-                      <Button variant="call" onClick={handleSaveEdit}>ذخیره</Button>
-                      <Button variant="danger" onClick={handleCancelEdit}>انصراف</Button>
-</div>
-                  ):(
-                  <div className="flex gap-2 items-center justify-center">
-                    <Button variant="call" onClick={()=>handleStartEdit(branch)}>ویرایش</Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handelDelete(branch.id)}
-                    >
-                      حذف
-                    </Button>
-                  </div>
+                      <Button variant="call" onClick={handleSaveEdit}>
+                        ذخیره
+                      </Button>
+                      <Button variant="danger" onClick={handleCancelEdit}>
+                        انصراف
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2 items-center justify-center">
+                      <Button
+                        variant="call"
+                        onClick={() => handleStartEdit(branch)}
+                      >
+                        ویرایش
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handelDelete(branch.id)}
+                      >
+                        حذف
+                      </Button>
+                    </div>
                   )}
                 </td>
               </tr>
