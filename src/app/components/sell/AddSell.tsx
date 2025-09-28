@@ -3,6 +3,7 @@
 import { Sell } from "@/types/types";
 import React, { useCallback, useState } from "react";
 import Button from "../ui/Button";
+import ListSell from "./ListSell";
 
 const AddSell: React.FC = () => {
 
@@ -99,6 +100,7 @@ const AddSell: React.FC = () => {
           />
           <Button onClick={handleAdd}>افزودن محصول</Button>
        </div>
+       <ListSell sells={sells}/>
     </div>
   );
 };
