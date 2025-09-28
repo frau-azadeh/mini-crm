@@ -8,7 +8,7 @@ import Button from "../ui/Button";
 import ListAdmin from "./ListAdmin";
 
 const AddAdmin: React.FC = () => {
-  const [admin, setAdmin] = useState<Admin[]>([]);
+  const [admins, setAdmins] = useState<Admin[]>([]);
   const [form, setForm] = useState<Omit<Admin, "id">>({
     name: "",
     family: "",
@@ -23,7 +23,7 @@ const AddAdmin: React.FC = () => {
       id: Date.now().toString(),
       ...form,
     };
-    setAdmin((prev) => [...prev, newAdmin]);
+    setAdmins((prev) => [...prev, newAdmin]);
     setForm({
       name: "",
       family: "",
@@ -38,12 +38,12 @@ const AddAdmin: React.FC = () => {
   }, []);
 
   const handleDelete = useCallback((id: Admin["id"]) => {
-    setAdmin((prev) => prev.filter((t) => String(t.id) !== String(id)));
+    setAdmins((prev) => prev.filter((t) => String(t.id) !== String(id)));
   }, []);
 
   const handleEdit = useCallback(
     (id: Admin["id"], newData: Omit<Admin, "id">) => {
-      setAdmin((prev) =>
+      setAdmins((prev) =>
         prev.map((t) =>
           String(t.id) === String(id) ? { ...t, ...newData } : t,
         ),
@@ -92,7 +92,7 @@ const AddAdmin: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن ادمین</Button>
       </div>
-      <ListAdmin admins={admin} onDelete={handleDelete} onEdit={handleEdit} />
+      <ListAdmin admins={admins} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 };
