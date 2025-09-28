@@ -1,5 +1,8 @@
+"use client"
+
 import { Branch } from '@/types/types'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import Button from '../ui/Button'
 
 const AddBranch:React.FC = () => {
 
@@ -10,11 +13,40 @@ const AddBranch:React.FC = () => {
     address:"",
     status:""
   })
+
+  const handleChange = useCallback((e:React.ChangeEvent<HTMLInputElement>)=>{
+    const {name, value} = e.target
+    setForm((prev)=>({...prev,[name]:value}))
+  },[])
   return (
     <div className='mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg rounded-xl md:p-8'>
       <h2 className='font-bold text-white text-xl md:text-2xl mb-6'>اطلاعات شعب را وارد کنید!</h2>
       <div className='bg-white rounded-lg p-6 shadow-inner'>
+        <input
+          name='city'
+          value={form.city}
+          placeholder='نام شهر'
+          onChange={handleChange}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+        />
 
+        <input
+          name="address"
+          value={form.address}
+          placeholder='نشانی'
+          onChange={handleChange}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"       
+          />
+
+          <input
+            name='status'
+            value={form.status}
+            placeholder='وضعیت'
+            onChange={handleChange}
+            className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+          />
+
+          <Button>ذخیره</Button>
       </div>
     </div>
   )
