@@ -5,9 +5,10 @@ import React, { useCallback, useState } from "react";
 import { Branch } from "@/types/types";
 
 import Button from "../ui/Button";
+import ListBranch from "./ListBranch";
 
 const AddBranch: React.FC = () => {
-  const [branchs, setBranchs] = useState<Branch[]>([]);
+  const [branches, setBranches] = useState<Branch[]>([]);
   const [form, setForm] = useState<Omit<Branch, "id">>({
     city: "",
     phone: "",
@@ -27,7 +28,7 @@ const AddBranch: React.FC = () => {
       id: Date.now().toString(),
       ...form,
     };
-    setBranchs((prev) => [...prev, newBranch]);
+    setBranches((prev) => [...prev, newBranch]);
     setForm({
       city: "",
       phone: "",
@@ -76,6 +77,7 @@ const AddBranch: React.FC = () => {
 
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
+      <ListBranch branches={branches}/>
     </div>
   );
 };
