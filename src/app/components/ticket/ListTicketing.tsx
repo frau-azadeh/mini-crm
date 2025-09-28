@@ -30,7 +30,7 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
       if (!editData) return;
       const name = e.currentTarget.name as keyof Omit<Ticket, "id">;
       const value = e.currentTarget.value;
-      setEditData(prev => prev ? { ...prev, [name]: value } : prev);
+      setEditData((prev) => (prev ? { ...prev, [name]: value } : prev));
     },
     [editData],
   );
