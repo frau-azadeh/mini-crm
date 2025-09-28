@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const ListBranch = () => {
-  return (
-    <div>ListBranch</div>
-  )
-}
+  return <div>ListBranch</div>;
+};
 
-export default ListBranch
+export default ListBranch;
