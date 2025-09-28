@@ -40,7 +40,6 @@ const AddAdmin: React.FC = () => {
   const handleDelete = useCallback((id: Admin["id"]) => {
     setAdmins((prev) => prev.filter((t) => String(t.id) !== String(id)));
   }, []);
-
   const handleEdit = useCallback(
     (id: Admin["id"], newData: Omit<Admin, "id">) => {
       setAdmins((prev) =>
