@@ -1,50 +1,52 @@
-"use client"
-import { Admin } from '@/types/types'
-import React, { useCallback, useState, useMemo } from 'react'
-import Button from '../ui/Button'
+"use client";
 
-const AddAdmin:React.FC = () => {
+import React, { useCallback, useMemo, useState } from "react";
 
-  const [admin, setAdmin] = useState<Admin[]>([])
+import { Admin } from "@/types/types";
+
+import Button from "../ui/Button";
+import ListAdmin from "./ListAdmin";
+
+const AddAdmin: React.FC = () => {
+  const [admin, setAdmin] = useState<Admin[]>([]);
   const [form, setForm] = useState<Omit<Admin, "id">>({
-    name:"",
-    family:"",
-    userName:"",
-    password:""
-  })
+    name: "",
+    family: "",
+    userName: "",
+    password: "",
+  });
 
-  const handleAdd = useCallback(()=>{
-    if(!form.name.trim()) return
+  const handleAdd = useCallback(() => {
+    if (!form.name.trim()) return;
 
-    const newAdmin:Admin ={
+    const newAdmin: Admin = {
       id: Date.now().toString(),
-      ...form
-    }
-    setAdmin((prev)=>[...prev,newAdmin])
+      ...form,
+    };
+    setAdmin((prev) => [...prev, newAdmin]);
     setForm({
-      name:"",
-      family:"",
-      userName:"",
-      password:""
-    })
-  },[form])
+      name: "",
+      family: "",
+      userName: "",
+      password: "",
+    });
+  }, [form]);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>)=>{
-    const {name, value} = e.target
-    setForm((prev)=>({...prev,[name]:value}))
-  },[])
-
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }, []);
 
   return (
     <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
-      <h2 className='font-bold text-white text-xl md:text-2xl mb-6'>
+      <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
         اطلاعات ادمین را وارد کنید!
       </h2>
-      <div className='bg-white rounded-lg p-6 shadow-inner'>
+      <div className="bg-white rounded-lg p-6 shadow-inner">
         <input
           name="name"
           value={form.name}
-          placeholder='نام'
+          placeholder="نام"
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
           onChange={handleChange}
         />
@@ -54,13 +56,13 @@ const AddAdmin:React.FC = () => {
           value={form.family}
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
           onChange={handleChange}
-          placeholder='نام خانوادگی'
+          placeholder="نام خانوادگی"
         />
 
         <input
           name="userName"
           value={form.userName}
-          placeholder='نام کاربری'
+          placeholder="نام کاربری"
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
           onChange={handleChange}
         />
@@ -70,13 +72,14 @@ const AddAdmin:React.FC = () => {
           value={form.password}
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
           placeholder="رمز عبور"
-          type='password'
+          type="password"
           onChange={handleChange}
         />
         <Button onClick={handleAdd}>افزودن ادمین</Button>
       </div>
+      <ListAdmin admin={admin} />
     </div>
-  )
-}
+  );
+};
 
-export default AddAdmin
+export default AddAdmin;
