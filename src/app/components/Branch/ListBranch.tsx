@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { Branch } from "@/types/types";
 
@@ -9,11 +9,22 @@ interface ListBranchTableProps {
   onDelete: (id: Branch["id"])=> void
 }
 const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
+  const[editId, setEditingId] = useState<Branch["id"] |null>(null)
+  const[editData, setEditData] = useState<Omit<Branch, "id">| null>(null)
+
   const countBranches = useMemo(() => branches.length, [branches]);
 
   const handelDelete = useCallback((id: Branch["id"])=>{
     onDelete?.(id)
   },[onDelete])
+
+  const handleFieldChange = useCallback((e: React.ChangeEvent<HTMLInputElement>)=>{
+    if(!editData) return
+    const name = e.currentTarget.name as keyof Omit<Branch, "id">
+    const value = e.currentTarget.value
+    setEditData((prev)=>prev?{...prev,[name]:value}:prev)
+  }, [editData])
+
   return (
     <div className="mt-4">
       <p className="text-white">تعداد شعب ثبت شده{countBranches}</p>
