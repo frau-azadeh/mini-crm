@@ -41,6 +41,10 @@ const AddBranch: React.FC = () => {
     setBranches((prev) => prev.filter((t) => String(t.id) !== String(id)));
   }, []);
 
+  const handleEdit = useCallback((id: Branch["id"], newData: Omit<Branch, "id">)=>{
+    setBranches((prev)=>prev.map((t)=>String(t.id)=== String(id)?{...t, ...newData}: t))
+  },[])
+
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg rounded-xl md:p-8">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
@@ -81,7 +85,7 @@ const AddBranch: React.FC = () => {
 
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
-      <ListBranch branches={branches} onDelete={handleDelete} />
+      <ListBranch branches={branches} onDelete={handleDelete} onEdit={handleEdit}/>
     </div>
   );
 };
