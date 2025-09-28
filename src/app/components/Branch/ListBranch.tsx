@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { Branch } from "@/types/types";
 
@@ -6,9 +6,14 @@ import Button from "../ui/Button";
 
 interface ListBranchTableProps {
   branches: Branch[];
+  onDelete: (id: Branch["id"])=> void
 }
-const ListBranch: React.FC<ListBranchTableProps> = ({ branches }) => {
+const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete }) => {
   const countBranches = useMemo(() => branches.length, [branches]);
+
+  const handelDelete = useCallback((id: Branch["id"])=>{
+    onDelete?.(id)
+  },[onDelete])
   return (
     <div className="mt-4">
       <p className="text-white">تعداد شعب ثبت شده{countBranches}</p>
@@ -67,7 +72,7 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches }) => {
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
                   <div className="flex gap-2 items-center justify-center">
                     <Button variant="call">ویرایش</Button>
-                    <Button variant="danger">حذف</Button>
+                    <Button variant="danger" onClick={()=>handelDelete(branch.id)}>حذف</Button>
                   </div>
                 </td>
               </tr>
