@@ -44,6 +44,18 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells }) => {
               </th>
             </tr>
           </thead>
+          <tbody className="bg-white divide-y divide-gray-100">
+            {sells.length === 0 &&(
+                  <tr>
+                <td
+                  colSpan={7}
+                  className="px-4 py-6 text-center text-sm text-gray-500"
+                >
+                <p>هیچ محصولی ثبت نشده</p>
+                  </td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
     </div>
