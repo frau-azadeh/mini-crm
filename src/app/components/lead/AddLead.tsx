@@ -37,13 +37,20 @@ const AddLead: React.FC = () => {
     });
   }, [form]);
 
-  const handleDelete = useCallback((id: Lead["id"])=>{
-    setLeads((prev)=>prev.filter((t)=> String(t.id)!== String(id)))
-  },[])
+  const handleDelete = useCallback((id: Lead["id"]) => {
+    setLeads((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
 
-  const handleEdit = useCallback((id: Lead["id"], newData:Omit<Lead, "id">)=>{
-    setLeads((prev)=>prev.map((t)=>String(t.id)===String(id)?{...t,...newData}:t))
-  },[])
+  const handleEdit = useCallback(
+    (id: Lead["id"], newData: Omit<Lead, "id">) => {
+      setLeads((prev) =>
+        prev.map((t) =>
+          String(t.id) === String(id) ? { ...t, ...newData } : t,
+        ),
+      );
+    },
+    [],
+  );
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
@@ -82,7 +89,7 @@ const AddLead: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن سرنخ</Button>
       </div>
-      <ListLead leads={leads} onDelete={handleDelete} onEdit={handleEdit}/>
+      <ListLead leads={leads} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 };
