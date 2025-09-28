@@ -30,11 +30,31 @@ const ListAdmin: React.FC<ListAdminTableProps> = ({
       if (!editData) return;
       const name = e.currentTarget.name as keyof Omit<Admin, "id">;
       const value = e.currentTarget.value;
-      setEditData({ ...editData, [name]: value });
+      setEditData(prev => prev ? { ...prev, [name]: value } : prev);
     },
     [editData],
   );
+  const handleStartEdit = useCallback((admin:Admin) => {
+setEditingId(admin.id)
+setEditData({
+    name: admin.name,
+    family: admin.family,
+    userName: admin.userName,
+    password: admin.password
+})
+  }, []);
 
+  const handleCancelEdit = useCallback(()=>{
+    setEditingId(null)
+    setEditData(null)
+  },[])
+
+  const handleSaveEdit = useCallback(()=>{
+   if (editingId === null || !editData) return;
+    onEdit?.(editingId, editData);
+    setEditingId(null);
+    setEditData(null);
+  }, [editData, onEdit, editingId]);
   return (
     <div className="mt-4">
       <p className="font-bold text-white mb-2">
@@ -93,7 +113,7 @@ const ListAdmin: React.FC<ListAdminTableProps> = ({
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editData) === String(admin.id) ? (
+                  {String(editingId) === String(admin.id) ? (
                     <input
                       className="w-full border rounded px-2 py-1 text-sm"
                       name="family"
@@ -105,40 +125,56 @@ const ListAdmin: React.FC<ListAdminTableProps> = ({
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editData) === String(admin.id) ? (
-                    <input 
-                        className="w-full border rounded px-2 py-1 text-sm"
-                        name="userName"
-                        value={editData?.userName??""}
-                        onChange={handleFieldChange}
+                  {String(editingId) === String(admin.id) ? (
+                    <input
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      name="userName"
+                      value={editData?.userName ?? ""}
+                      onChange={handleFieldChange}
                     />
                   ) : (
                     <span>{admin.userName}</span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editData)===String(admin.id)?(
+                  {String(editingId) === String(admin.id) ? (
                     <input
-                        name="password"
-                        value={editData?.password??""}
-                        className="w-full border rounded px-2 py-1 text-sm"
-                        onChange={handleFieldChange}
+                      name="password"
+                      value={editData?.password ?? ""}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange}
                     />
-                  ):(
-                  <span> {admin.password}</span>
-                 
-                 )}
+                  ) : (
+                    <span> {admin.password}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  <div className="flex items-center gap-2 justify-center">
-                    <Button variant="call">ویرایش</Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDelete(admin.id)}
-                    >
-                      حذف
-                    </Button>
-                  </div>
+                  {String(editingId) === String(admin.id) ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <Button onClick={handleSaveEdit} variant="call">
+                        ذخیره
+                      </Button>
+                      <Button onClick={handleCancelEdit} variant="danger">
+                        انصراف
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <Button
+                        variant="call"
+                        onClick={() => handleStartEdit(admin)}
+                      >
+                        ویرایش
+                      </Button>
+
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDelete(admin.id)}
+                      >
+                        حذف
+                      </Button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
