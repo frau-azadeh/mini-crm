@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { Lead } from "@/types/types";
 
@@ -6,10 +6,16 @@ import Button from "../ui/Button";
 
 interface ListLeadTableType {
   leads: Lead[];
+  onDelete?:(id: Lead["id"]) => void
 }
 
-const ListLead: React.FC<ListLeadTableType> = ({ leads }) => {
+const ListLead: React.FC<ListLeadTableType> = ({ leads, onDelete }) => {
   const countLead = useMemo(() => leads.length, [leads]);
+
+  const handleDelete = useCallback((id: Lead["id"])=>{
+    onDelete?.(id)
+  },[onDelete])
+
 
   return (
     <div className="mt-4">
@@ -71,7 +77,7 @@ const ListLead: React.FC<ListLeadTableType> = ({ leads }) => {
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
                   <div className="flex items-center justify-center gap-2">
                     <Button variant="call">ویرایش</Button>
-                    <Button variant="danger">حذف</Button>
+                    <Button variant="danger" onClick={()=>handleDelete(lead.id)}>حذف</Button>
                   </div>
                 </td>
               </tr>
