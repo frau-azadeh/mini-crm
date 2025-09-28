@@ -1,8 +1,9 @@
 "use client"
 
 import { Lead } from '@/types/types'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback,  useState } from 'react'
 import Button from '../ui/Button'
+import ListLead from './ListLead'
 
 const AddLead:React.FC = () => {
 
@@ -77,6 +78,7 @@ const AddLead:React.FC = () => {
 <Button onClick={handleAdd}>افزودن سرنخ</Button>
 
       </div>
+      <ListLead leads={leads}/>
     </div>
   )
 }
