@@ -37,6 +37,10 @@ const AddLead: React.FC = () => {
     });
   }, [form]);
 
+  const handleDelete = useCallback((id: Lead["id"])=>{
+    setLeads((prev)=>prev.filter((t)=> String(t.id)!== String(id)))
+  },[])
+
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
@@ -74,7 +78,7 @@ const AddLead: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن سرنخ</Button>
       </div>
-      <ListLead leads={leads} />
+      <ListLead leads={leads} onDelete={handleDelete}/>
     </div>
   );
 };
