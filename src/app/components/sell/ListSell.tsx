@@ -22,7 +22,19 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells }) => {
                 #
               </th>
               <th className="px-4 py-2 text-right text-sm font-medium text-gray-700">
-                موضوع
+                نام محصول
+              </th>
+              <th className="px-4 py-2 text-right text-sm font-medium text-gray-700">
+                تعداد
+              </th>
+              <th className="px-4 py-2 text-right text-sm font-medium text-gray-700">
+                ساخت
+              </th>
+              <th className="px-4 py-2 text-right text-sm font-medium text-gray-700">
+                قیمت فروش
+              </th>
+              <th className="px-4 py-2 text-right text-sm font-medium text-gray-700">
+                قیمت خرید
               </th>
               <th className="px-4 py-2 text-right text-sm font-medium text-gray-700">
                 شرح
