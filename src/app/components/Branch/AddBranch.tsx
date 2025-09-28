@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { Branch } from "@/types/types";
 
 import Button from "../ui/Button";
+import ListBranch from "./ListBranch";
 
 const AddBranch: React.FC = () => {
-  const [branch, setBranch] = useState<Branch[]>([]);
+  const [branches, setBranches] = useState<Branch[]>([]);
   const [form, setForm] = useState<Omit<Branch, "id">>({
     city: "",
     phone: "",
@@ -27,27 +28,41 @@ const AddBranch: React.FC = () => {
       id: Date.now().toString(),
       ...form,
     };
-    setBranch((prev) => [...prev, newBranch]);
-    setForm({ city: "", phone: "", address: "", status: "" });
+    setBranches((prev) => [...prev, newBranch]);
+    setForm({
+      city: "",
+      phone: "",
+      address: "",
+      status: "",
+    });
   }, [form]);
 
-  const countBranch = useMemo(() => branch.length, [branch]);
+  const handleDelete = useCallback((id: Branch["id"]) => {
+    setBranches((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
+
+  const handleEdit = useCallback(
+    (id: Branch["id"], newData: Omit<Branch, "id">) => {
+      setBranches((prev) =>
+        prev.map((t) =>
+          String(t.id) === String(id) ? { ...t, ...newData } : t,
+        ),
+      );
+    },
+    [],
+  );
 
   return (
-    <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
+    <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg rounded-xl md:p-8">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
-        اطلاعات شعب را وارد کنید:
+        اطلاعات شعب را وارد کنید!
       </h2>
       <div className="bg-white rounded-lg p-6 shadow-inner">
-        <span className="block text-sm text-gray-600 mb-4">
-          تعداد شعب وارد شده
-          <span className="font-semibold text-slate-700">{countBranch}</span>
-        </span>
         <input
           name="city"
           value={form.city}
-          onChange={handleChange}
           placeholder="نام شهر"
+          onChange={handleChange}
           className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
         />
 
@@ -60,15 +75,28 @@ const AddBranch: React.FC = () => {
         />
 
         <input
+          name="phone"
+          value={form.phone}
+          onChange={handleChange}
+          placeholder="شماره همراه"
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+        />
+
+        <input
           name="status"
           value={form.status}
-          placeholder="وضعیت شعبه"
-          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+          placeholder="وضعیت"
           onChange={handleChange}
+          className="border border-gray-300 rounded-lg p-2 mb-3 w-full focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
         />
 
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
+      <ListBranch
+        branches={branches}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+      />
     </div>
   );
 };
