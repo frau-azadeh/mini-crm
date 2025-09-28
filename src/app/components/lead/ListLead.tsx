@@ -1,5 +1,6 @@
 import { Lead } from '@/types/types'
 import React, { useMemo } from 'react'
+import Button from '../ui/Button'
 interface ListLeadTableType {
   leads : Lead[]
 }
@@ -48,6 +49,22 @@ const ListLead:React.FC<ListLeadTableType> = ({leads}) => {
               </td>
             </tr>
              )}
+             {leads.map((lead, index)=>(
+ <tr key={lead.id}>
+              <td className="px-4 py-3 text-right text-sm text-gray-700 ">{index+1}</td>
+              <td className="px-4 py-3 text-right text-sm text-gray-700 ">{lead.name}</td>
+              <td className="px-4 py-3 text-right text-sm text-gray-700 ">{lead.family}</td>
+              <td className="px-4 py-3 text-right text-sm text-gray-700 ">{lead.address}</td>
+              <td className="px-4 py-3 text-right text-sm text-gray-700 ">{lead.phone}</td>
+              <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                <div className='flex items-center justify-center gap-2'>
+                  <Button variant='call'>ویرایش</Button>
+                  <Button variant='danger'>حذف</Button>
+                </div>
+              </td>
+             </tr>
+             ))}
+            
           </tbody>
           </table>
           </div>
