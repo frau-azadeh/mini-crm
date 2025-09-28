@@ -1,7 +1,7 @@
 "use client"
 
 import { Sell } from "@/types/types";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import Button from "../ui/Button";
 
 const AddSell: React.FC = () => {
@@ -40,11 +40,11 @@ const AddSell: React.FC = () => {
     })
   },[form])
 
-const countAdd = useMemo(()=>sells.length, [sells])
+
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
-        اجناس را وارد کنید{countAdd}
+        اجناس را وارد کنید
       </h2>
        <div className="bg-white rounded-lg p-6 shadow-inner">
           <input
