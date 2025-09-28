@@ -1,7 +1,18 @@
-import React from "react";
+import { Branch } from '@/types/types'
+import React, { useMemo } from 'react'
 
-const ListBranch = () => {
-  return <div>ListBranch</div>;
-};
+interface ListBranchTableProps{
+    branches :Branch[],
 
-export default ListBranch;
+}
+const ListBranch:React.FC<ListBranchTableProps> = ({branches}) => {
+
+    const countBranches = useMemo(()=>branches.length,[branches])
+  return (
+    <div className='mt-4'>
+        <p className='text-white'>تعداد شعب ثبت شده{countBranches}</p>
+    </div>
+  )
+}
+
+export default ListBranch
