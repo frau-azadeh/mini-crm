@@ -99,22 +99,72 @@ const ListLead: React.FC<ListLeadTableType> = ({ leads, onDelete, onEdit}) => {
                   {index + 1}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {lead.name}
+                  {String(editingId)===String(lead.id)?(
+                    <input
+                      onChange={handleFieldChange}
+                                            className="w-full border rounded px-2 py-1 text-sm"
+name="name"
+value={editData?.name??""}
+                    />
+                  ):(
+                    <span>{lead.name}</span>
+                  )}
+                
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {lead.family}
+                 {String(editingId)===String(lead.id)?(
+                  <input
+                    onChange={handleFieldChange}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                  name="family"
+                  value={editData?.family??""}
+                  />
+                 ):(
+                  <span>{lead.family}</span>
+                 )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {lead.address}
+                  {String(editingId)===String(lead.id)?(
+                    <input
+                      onChange={handleFieldChange}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      name="address"
+                      value={editData?.address??""}
+                    />
+                  ):(
+                    <span>{lead.address}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {lead.phone}
+                  {String(editingId)===String(lead.id)?(
+                    <input
+                    onChange={handleFieldChange}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      name="phone"
+                      value={editData?.phone??""}
+                    />
+                  ):(
+                    <span>{lead.phone}</span>
+                  )}
+                  
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
+                  {String(editingId)===String(lead.id)?(
+                      <div className="flex items-center justify-center gap-2">
+                                          <Button onClick={handleSaveEdit} variant="call">
+                                            ذخیره
+                                          </Button>
+                                          <Button onClick={handleCancelEdit} variant="danger">
+                                            انصراف
+                                          </Button>
+                                        </div>
+                                      ) :(
+                 
                   <div className="flex items-center justify-center gap-2">
-                    <Button variant="call">ویرایش</Button>
+                    <Button variant="call" onClick={()=>handleStartEdit(lead)}>ویرایش</Button>
                     <Button variant="danger" onClick={()=>handleDelete(lead.id)}>حذف</Button>
                   </div>
+                                      )}
                 </td>
               </tr>
             ))}
