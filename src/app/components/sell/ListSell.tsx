@@ -1,9 +1,16 @@
-import React from "react";
+import { Sell } from "@/types/types";
+import React, { useMemo } from "react";
 
-const ListSell = () => {
+interface ListSellTableProps{
+    sells: Sell[]
+}
+const ListSell:React.FC<ListSellTableProps> = ({sells}) => {
+
+    const countSell = useMemo(()=> sells.length,[sells])
+
   return (
     <div>
-      <h2>تعداد لیستهای ثبت شده</h2>
+       <p className="font-bold text-white mb-2">تعداد محصولات ثبت شده{countSell}</p>
     </div>
   );
 };
