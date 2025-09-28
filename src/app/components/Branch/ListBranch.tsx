@@ -113,7 +113,7 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete, onEdit
 
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editData)=== String(branch.id)?(
+                  {String(editingId)=== String(branch.id)?(
                     <input
                       name="address"
                       value={editData?.address??""}
@@ -126,7 +126,7 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete, onEdit
                   
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editData) === String(branch.id)?(
+                  {String(editingId) === String(branch.id)?(
                     <input
                     className="w-full border rounded px-2 py-1 text-sm"
                     name="phone"
@@ -138,7 +138,7 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete, onEdit
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editData)=== String(branch.id)?(
+                  {String(editingId)=== String(branch.id)?(
                     <input
                       className="w-full border rounded px-2 py-1 text-sm"
                       name="status"
@@ -151,7 +151,7 @@ const ListBranch: React.FC<ListBranchTableProps> = ({ branches, onDelete, onEdit
                   
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-700 ">
-                  {String(editData)=== String(branch.id)?(
+                  {String(editingId)=== String(branch.id)?(
                     <div className="flex items-center justify-center gap-2">
                       <Button variant="call" onClick={handleSaveEdit}>ذخیره</Button>
                       <Button variant="danger" onClick={handleCancelEdit}>انصراف</Button>
