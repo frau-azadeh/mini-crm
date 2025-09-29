@@ -9,7 +9,7 @@ import ListSell from "./ListSell";
 import { useSellStorage } from "./hook/useSellStorage";
 
 const AddSell: React.FC = () => {
-  const {sells, addSell, editSell, deleteSell} = useSellStorage()
+  const { sells, addSell, editSell, deleteSell } = useSellStorage();
   const [form, setForm] = useState<Omit<Sell, "id">>({
     quantity: "",
     name: "",
@@ -30,8 +30,8 @@ const AddSell: React.FC = () => {
 
   const handleAdd = useCallback(() => {
     if (!form.name.trim()) return;
-    addSell({id: Date.now().toString(),...form})
-    
+    addSell({ id: Date.now().toString(), ...form });
+
     setForm({
       name: "",
       quantity: "",
@@ -41,10 +41,6 @@ const AddSell: React.FC = () => {
       purchesPrice: "",
     });
   }, [form]);
-
-
-
-
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
