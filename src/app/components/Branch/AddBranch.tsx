@@ -9,8 +9,7 @@ import ListBranch from "./ListBranch";
 import { useBranchStorage } from "./hook/useBrachStorage";
 
 const AddBranch: React.FC = () => {
-
-  const{branches, addBranch, deleteBranch, editBranch} = useBranchStorage()
+  const { branches, addBranch, deleteBranch, editBranch } = useBranchStorage();
 
   const [form, setForm] = useState<Omit<Branch, "id">>({
     city: "",
@@ -26,8 +25,7 @@ const AddBranch: React.FC = () => {
 
   const handleAdd = useCallback(() => {
     if (!form.city.trim()) return;
-    addBranch({id:Date.now().toString(), ...form})
-;
+    addBranch({ id: Date.now().toString(), ...form });
     setForm({
       city: "",
       phone: "",
@@ -35,10 +33,6 @@ const AddBranch: React.FC = () => {
       status: "",
     });
   }, [form]);
-
-
-
-
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg rounded-xl md:p-8">
