@@ -1,46 +1,44 @@
-import { Sell } from "@/types/types"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react";
 
-const STORAGE_KEY = "my_app_sell"
+import { Sell } from "@/types/types";
 
-export function useSellStorage(){
-    
-    const[sells, setSells] = useState<Sell[]>([])
+const STORAGE_KEY = "my_app_sell";
 
-    useEffect(()=>{
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY)
-            if(!raw) return
-            const parsed = JSON.parse(raw) as Sell[] | null
-            if(Array.isArray(parsed)) setSells(parsed)
-            
-        } catch (error) {
-            console.error("خطا در خواندن در localStorage", error)
-        }
-    },[])
+export function useSellStorage() {
+  const [sells, setSells] = useState<Sell[]>([]);
 
-    useEffect(()=>{
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(sells))
-        } catch (error) {
-            console.error("خطا در نوشتن در localStorage", error)
-        }
-    },[sells])
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Sell[] | null;
+      if (Array.isArray(parsed)) setSells(parsed);
+    } catch (error) {
+      console.error("خطا در خواندن در localStorage", error);
+    }
+  }, []);
 
-    const addSell = useCallback((newSell: Sell)=>{
-        setSells((prev)=>[newSell,...prev])
-    },[])
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(sells));
+    } catch (error) {
+      console.error("خطا در نوشتن در localStorage", error);
+    }
+  }, [sells]);
 
-    const editSell = useCallback((id: Sell["id"], newData: Omit<Sell, "id">)=>{
-        setSells((prev)=>prev.map((t)=>
-        String(t.id) === String(id)?
-        {...t, ...newData}:t
-        ))
-    },[])
+  const addSell = useCallback((newSell: Sell) => {
+    setSells((prev) => [newSell, ...prev]);
+  }, []);
 
-    const deleteSell = useCallback ((id: Sell["id"])=>{
-        setSells((prev)=>prev.filter((t)=>String(t.id) !== String(id)))
-    },[])
+  const editSell = useCallback((id: Sell["id"], newData: Omit<Sell, "id">) => {
+    setSells((prev) =>
+      prev.map((t) => (String(t.id) === String(id) ? { ...t, ...newData } : t)),
+    );
+  }, []);
 
-    return{sells, addSell, editSell, deleteSell}
+  const deleteSell = useCallback((id: Sell["id"]) => {
+    setSells((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
+
+  return { sells, addSell, editSell, deleteSell };
 }
