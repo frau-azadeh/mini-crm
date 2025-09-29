@@ -38,5 +38,9 @@ export function useSellStorage(){
         ))
     },[])
 
-    return{sells, addSell, editSell}
+    const deleteSell = useCallback ((id: Sell["id"])=>{
+        setSells((prev)=>prev.filter((t)=>String(t.id) !== String(id)))
+    },[])
+
+    return{sells, addSell, editSell, deleteSell}
 }
