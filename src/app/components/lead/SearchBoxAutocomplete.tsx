@@ -139,7 +139,7 @@ export default function SearchBoxAutocomplete({
         }}
         onKeyDown={onKeyDown}
         placeholder={placeholder}
-        className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className="bg-white w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400"
         aria-label="search"
       />
 
