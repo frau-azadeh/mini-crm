@@ -30,5 +30,9 @@ export function useLeadStorage() {
     setLeads((prev)=>[newLeads, ...prev])
   },[])
 
-  return { leads, addLead };
+  const deleteLead = useCallback((id: Lead["id"])=>{
+    setLeads((prev)=>prev.filter((t)=>String(t.id)!==String(id)))
+  },[])
+
+  return { leads, addLead, deleteLead };
 }
