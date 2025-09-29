@@ -18,24 +18,26 @@ export function useTaskStorage() {
     } catch (error) {
       console.error("خطا در خواندن از  localStorage", error);
     }
-  },[]);
+  }, []);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
     } catch (error) {
-        console.error("خطا در نوشتن در localStorage",error)
+      console.error("خطا در نوشتن در localStorage", error);
     }
-  },[])
+  }, []);
 
-  const addTask = useCallback((newTask: Task)=>{
-    setTask((prev)=>[newTask, ...prev])
-  }, [])
+  const addTask = useCallback((newTask: Task) => {
+    setTask((prev) => [newTask, ...prev]);
+  }, []);
 
-  const deleteTask = useCallback((id: Task["id"])=>{
-    setTask((prev)=>prev.filter((t)=>String(t.id)!== String(id)))
-  },[tasks])
+  const deleteTask = useCallback(
+    (id: Task["id"]) => {
+      setTask((prev) => prev.filter((t) => String(t.id) !== String(id)));
+    },
+    [tasks],
+  );
 
   const editTask = useCallback((id: Task["id"], newText: string) => {
     setTask((prev) =>
@@ -45,10 +47,10 @@ export function useTaskStorage() {
               ...t,
               text: newText,
             }
-          : t
-      )
+          : t,
+      ),
     );
   }, []);
 
-  return{tasks, addTask, deleteTask, editTask}
+  return { tasks, addTask, deleteTask, editTask };
 }
