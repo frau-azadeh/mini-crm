@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { json } from "stream/consumers";
 
@@ -29,5 +29,17 @@ export function useTaskStorage() {
     }
   },[])
 
-  return{tasks}
+  const addTask = useCallback((newTask: Task)=>{
+    setTask((prev)=>[newTask, ...prev])
+  }, [])
+
+  const deleteTask = useCallback(()=>{
+
+  },[])
+
+  const editTask = useCallback(()=>{
+
+  },[])
+
+  return{tasks, addTask}
 }
