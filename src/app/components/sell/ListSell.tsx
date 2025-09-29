@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { Sell } from "@/types/types";
 
@@ -6,15 +6,30 @@ import Button from "../ui/Button";
 
 interface ListSellTableProps {
   sells: Sell[];
-  onDelete?: (id: Sell["id"]) => void
+  onDelete?: (id: Sell["id"]) => void;
 }
 const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete }) => {
+  const [editingId, setEditingId] = useState<Sell["id"] | null>(null);
+  const [editData, setEditData] = useState<Omit<Sell, "id"> | null>(null);
+
   const countSell = useMemo(() => sells.length, [sells]);
 
-  const handleDelete = useCallback((id: Sell["id"])=>{
-    onDelete?.(id)
-  },[onDelete])
+  const handleDelete = useCallback(
+    (id: Sell["id"]) => {
+      onDelete?.(id);
+    },
+    [onDelete],
+  );
 
+  const handleFieldChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!editData) return;
+      const name = e.currentTarget.name as keyof Omit<Sell, "id">;
+      const value = e.target.value;
+      setEditData((prev) => (prev ? { ...prev, [name]: value } : prev));
+    },
+    [editData],
+  );
 
   return (
     <div className="mt-4">
@@ -69,27 +84,55 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete }) => {
                   {index + 1}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  <span>{sell.name}</span>
+                  {String(editingId) === String(sell.id) ? (
+                    <input name="name" value={editData?.name ?? ""} />
+                  ) : (
+                    <span>{sell.name}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  <span>{sell.quantity}</span>
+                  {String(editingId) === String(sell.id) ? (
+                    <input name="quantity" value={editData?.quantity ?? ""} />
+                  ) : (
+                    <span>{sell.quantity}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  <span>{sell.madeIn}</span>
+                  {String(editingId) === String(sell.id) ? (
+                    <input name="madeIn" value={editData?.madeIn ?? ""} />
+                  ) : (
+                    <span>{sell.madeIn}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  <span>{sell.purchesPrice}</span>{" "}
+                  {String(editData) === String(sell.id) ? (
+                    <input
+                      name="purchesPrice"
+                      value={editData?.purchesPrice ?? ""}
+                    />
+                  ) : (
+                    <span>{sell.purchesPrice}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  <span>{sell.sellPrice}</span>{" "}
+                  {String(editData) === String(sell.id) ? (
+                    <input name="sellPrice" value={editData?.sellPrice ?? ""} />
+                  ) : (
+                    <span>{sell.sellPrice}</span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  <span>{sell.description}</span>{" "}
+                  <span>{sell.description}</span>
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
                   <div className="flex items-center justify-center gap-2">
                     <Button variant="call">ویرایش</Button>
-                    <Button variant="danger" onClick={()=>handleDelete(sell.id)}>حذف</Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(sell.id)}
+                    >
+                      حذف
+                    </Button>
                   </div>
                 </td>
               </tr>
