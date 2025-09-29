@@ -150,7 +150,7 @@ const ListSell: React.FC<ListSellTableProps> = ({
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  {String(editData) === String(sell.id) ? (
+                  {String(editingId) === String(sell.id) ? (
                     <input
                       name="purchesPrice"
                       value={editData?.purchesPrice ?? ""}
@@ -162,7 +162,7 @@ const ListSell: React.FC<ListSellTableProps> = ({
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  {String(editData) === String(sell.id) ? (
+                  {String(editingId) === String(sell.id) ? (
                     <input
                       name="sellPrice"
                       value={editData?.sellPrice ?? ""}
@@ -174,7 +174,7 @@ const ListSell: React.FC<ListSellTableProps> = ({
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  {String(editData) === String(sell.id) ? (
+                  {String(editingId) === String(sell.id) ? (
                     <input
                       name="description"
                       value={editData?.description ?? ""}
