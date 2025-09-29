@@ -1,5 +1,5 @@
 import { Sell } from "@/types/types"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 const STORAGE_KEY = "my_app_sell"
 
@@ -27,5 +27,9 @@ export function useSellStorage(){
         }
     },[])
 
-    return{sells}
+    const addSell = useCallback((newSell: Sell)=>{
+        setSells((prev)=>[newSell,...prev])
+    },[])
+
+    return{sells, addSell}
 }
