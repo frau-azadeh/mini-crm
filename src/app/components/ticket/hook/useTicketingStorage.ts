@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { Ticket } from "@/types/types";
 
@@ -26,5 +26,13 @@ export function useTicketingStorage() {
     }
   }, [ticketing]);
 
-  return { ticketing };
+  const addTicketing = useCallback((newTicket: Ticket)=>{
+    setTicketing((prev)=>[newTicket, ...prev])
+  },[])
+
+  const deleteTicketing = useCallback((id: Ticket["id"])=>{
+    setTicketing((prev)=>prev.filter((t)=>String(t.id)!==String(id)))
+  },[])
+
+  return { ticketing, addTicketing, deleteTicketing };
 }
