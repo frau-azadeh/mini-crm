@@ -6,9 +6,11 @@ import { Ticket } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListTicketing from "./ListTicketing";
+import { useTicketingStorage } from "./hook/useTicketingStorage";
 
 const AddTicketing: React.FC = () => {
-  const [ticket, setTicket] = useState<Ticket[]>([]);
+  const { ticketing, addTicketing, editTicketing, deleteTicketing } =
+    useTicketingStorage();
   const [form, setForm] = useState<Omit<Ticket, "id">>({
     title: "",
     description: "",
@@ -25,32 +27,13 @@ const AddTicketing: React.FC = () => {
 
   const handleAdd = useCallback(() => {
     if (!form.title.trim()) return;
-    const newText: Ticket = {
-      id: Date.now().toString(),
-      title: form.title,
-      description: form.description,
-    };
-    setTicket((prev) => [...prev, newText]);
+    addTicketing({ id: Date.now().toString(), ...form });
     setForm({
       title: "",
       description: "",
     });
   }, [form]);
 
-  const handleDelete = useCallback((id: Ticket["id"]) => {
-    setTicket((prev) => prev.filter((t) => String(t.id) !== String(id)));
-  }, []);
-
-  const handleEdit = useCallback(
-    (id: Ticket["id"], newData: Omit<Ticket, "id">) => {
-      setTicket((prev) =>
-        prev.map((t) =>
-          String(t.id) === String(id) ? { ...t, ...newData } : t,
-        ),
-      );
-    },
-    [],
-  );
   return (
     <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
       <h2 className="font-bold text-white text-xl md:text-2xl mb-6">
@@ -75,9 +58,9 @@ const AddTicketing: React.FC = () => {
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
       <ListTicketing
-        tickets={ticket}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
+        tickets={ticketing}
+        onDelete={deleteTicketing}
+        onEdit={editTicketing}
       />
     </div>
   );
