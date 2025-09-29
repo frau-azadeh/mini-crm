@@ -91,7 +91,7 @@ const ListTicketing: React.FC<ListTicketTableProps> = ({
                   {index + 1}
                 </td>
 
-                <td className="px-4 py-3 text-right text-sm text-gray-700 w-full">
+                <td className="px-4 py-3 text-right text-sm text-gray-700 ">
                   {String(editingId) === String(ticket.id) ? (
                     <input
                       name="title"
