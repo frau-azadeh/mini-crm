@@ -6,8 +6,10 @@ import { Task } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListTaskTable from "./ListTaskTable";
+import { useTaskStorage } from "./hook/useTaskStorage";
 
 const AddTask = () => {
+  const {tasks} = useTaskStorage()
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
