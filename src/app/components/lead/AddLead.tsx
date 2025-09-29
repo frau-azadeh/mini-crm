@@ -8,9 +8,10 @@ import Button from "../ui/Button";
 import ListLead from "./ListLead";
 import SearchBox from "./SearchBox";
 import SearchBoxAutocomplete from "./SearchBoxAutocomplete";
+import { useLeadStorage } from "./hook/useLeadStorage";
 
 const AddLead: React.FC = () => {
-  const [leads, setLeads] = useState<Lead[]>([]);
+  const {leads, addLead, deleteLead, editLead} = useLeadStorage()
   const [form, setForm] = useState<Omit<Lead, "id">>({
     name: "",
     family: "",
@@ -27,12 +28,8 @@ const AddLead: React.FC = () => {
   }, []);
 
   const handleAdd = useCallback(() => {
-    if (!form.name.trim()) return;
-    const newLead: Lead = {
-      id: Date.now().toString(),
-      ...form,
-    };
-    setLeads((prev) => [...prev, newLead]);
+    if(!form.name.trim())return
+    addLead({id: Date.now().toString(), ...form})
     setForm({
       name: "",
       family: "",
@@ -41,20 +38,7 @@ const AddLead: React.FC = () => {
     });
   }, [form]);
 
-  const handleDelete = useCallback((id: Lead["id"]) => {
-    setLeads((prev) => prev.filter((t) => String(t.id) !== String(id)));
-  }, []);
 
-  const handleEdit = useCallback(
-    (id: Lead["id"], newData: Omit<Lead, "id">) => {
-      setLeads((prev) =>
-        prev.map((t) =>
-          String(t.id) === String(id) ? { ...t, ...newData } : t,
-        ),
-      );
-    },
-    [],
-  );
 
   // فیلتر کردن لیست بر اساس searchTerm (name, family, phone, address)
   const filteredLeads = useMemo(() => {
@@ -121,8 +105,8 @@ const AddLead: React.FC = () => {
       {/* لیست فیلترشده به ListLead پاس داده میشه */}
       <ListLead
         leads={filteredLeads}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
+        onDelete={deleteLead}
+        onEdit={editLead}
       />
     </div>
   );
