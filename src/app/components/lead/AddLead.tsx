@@ -11,7 +11,7 @@ import SearchBoxAutocomplete from "./SearchBoxAutocomplete";
 import { useLeadStorage } from "./hook/useLeadStorage";
 
 const AddLead: React.FC = () => {
-  const {leads, addLead, deleteLead, editLead} = useLeadStorage()
+  const { leads, addLead, deleteLead, editLead } = useLeadStorage();
   const [form, setForm] = useState<Omit<Lead, "id">>({
     name: "",
     family: "",
@@ -28,8 +28,8 @@ const AddLead: React.FC = () => {
   }, []);
 
   const handleAdd = useCallback(() => {
-    if(!form.name.trim())return
-    addLead({id: Date.now().toString(), ...form})
+    if (!form.name.trim()) return;
+    addLead({ id: Date.now().toString(), ...form });
     setForm({
       name: "",
       family: "",
@@ -37,8 +37,6 @@ const AddLead: React.FC = () => {
       address: "",
     });
   }, [form]);
-
-
 
   // فیلتر کردن لیست بر اساس searchTerm (name, family, phone, address)
   const filteredLeads = useMemo(() => {
@@ -103,11 +101,7 @@ const AddLead: React.FC = () => {
         placeholder="جستجو (کلیک روی پیشنهاد مقدار را پر می‌کند)"
       />
       {/* لیست فیلترشده به ListLead پاس داده میشه */}
-      <ListLead
-        leads={filteredLeads}
-        onDelete={deleteLead}
-        onEdit={editLead}
-      />
+      <ListLead leads={filteredLeads} onDelete={deleteLead} onEdit={editLead} />
     </div>
   );
 };

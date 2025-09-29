@@ -2,13 +2,14 @@
 
 import React, { useCallback, useState } from "react";
 
-import { Lead, Sell } from "@/types/types";
+import { Sell } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListSell from "./ListSell";
+import { useSellStorage } from "./hook/useSellStorage";
 
 const AddSell: React.FC = () => {
-  const [sells, setSells] = useState<Sell[]>([]);
+  const { sells, addSell, editSell, deleteSell } = useSellStorage();
   const [form, setForm] = useState<Omit<Sell, "id">>({
     quantity: "",
     name: "",
@@ -29,12 +30,8 @@ const AddSell: React.FC = () => {
 
   const handleAdd = useCallback(() => {
     if (!form.name.trim()) return;
+    addSell({ id: Date.now().toString(), ...form });
 
-    const newSell: Sell = {
-      id: Date.now().toString(),
-      ...form,
-    };
-    setSells((prev) => [...prev, newSell]);
     setForm({
       name: "",
       quantity: "",
@@ -44,21 +41,6 @@ const AddSell: React.FC = () => {
       purchesPrice: "",
     });
   }, [form]);
-
-  const handleDelete = useCallback((id: Sell["id"]) => {
-    setSells((prev) => prev.filter((t) => String(t.id) !== String(id)));
-  }, []);
-
-  const handleEdit = useCallback(
-    (id: Sell["id"], newData: Omit<Sell, "id">) => {
-      setSells((prev) =>
-        prev.map((t) =>
-          String(t.id) === String(id) ? { ...t, ...newData } : t,
-        ),
-      );
-    },
-    [],
-  );
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
@@ -116,7 +98,7 @@ const AddSell: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن محصول</Button>
       </div>
-      <ListSell sells={sells} onDelete={handleDelete} onEdit={handleEdit} />
+      <ListSell sells={sells} onDelete={deleteSell} onEdit={editSell} />
     </div>
   );
 };
