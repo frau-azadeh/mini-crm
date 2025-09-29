@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { Sell } from "@/types/types";
 
@@ -6,9 +6,15 @@ import Button from "../ui/Button";
 
 interface ListSellTableProps {
   sells: Sell[];
+  onDelete?: (id: Sell["id"]) => void
 }
-const ListSell: React.FC<ListSellTableProps> = ({ sells }) => {
+const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete }) => {
   const countSell = useMemo(() => sells.length, [sells]);
+
+  const handleDelete = useCallback((id: Sell["id"])=>{
+    onDelete?.(id)
+  },[onDelete])
+
 
   return (
     <div className="mt-4">
@@ -83,7 +89,7 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells }) => {
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
                   <div className="flex items-center justify-center gap-2">
                     <Button variant="call">ویرایش</Button>
-                    <Button variant="danger">حذف</Button>
+                    <Button variant="danger" onClick={()=>handleDelete(sell.id)}>حذف</Button>
                   </div>
                 </td>
               </tr>
