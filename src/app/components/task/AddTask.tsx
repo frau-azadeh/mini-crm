@@ -9,7 +9,7 @@ import ListTaskTable from "./ListTaskTable";
 import { useTaskStorage } from "./hook/useTaskStorage";
 
 const AddTask = () => {
-  const {tasks} = useTaskStorage()
+  const {tasks, addTask, deleteTask, editTask} = useTaskStorage()
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,26 +17,16 @@ const AddTask = () => {
   }, []);
 
   const handleAddTask = useCallback(() => {
-    if (!inputValue.trim()) return;
-    const newTask: Task = {
-      id: Date.now().toString(),
-      text: inputValue.trim(),
-    };
-    setTasks((prev) => [...prev, newTask]);
+    const trimmed = inputValue.trim();
+    if (!trimmed) return;
+    const id = Date.now().toString();
+    addTask({ id, text: trimmed });
     setInputValue("");
-  }, [inputValue]);
+  }, [inputValue, addTask]);
 
-  const handleEdit = useCallback((id: Task["id"], newTask: string) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        String(t.id) === String(id) ? { ...t, text: newTask } : t,
-      ),
-    );
-  }, []);
 
-  const handleDelete = useCallback((id: Task["id"]) => {
-    setTasks((prev) => prev.filter((t) => String(t.id) !== String(id)));
-  }, []);
+
+
 
   return (
     <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
@@ -56,8 +46,8 @@ const AddTask = () => {
         </div>
         <ListTaskTable
           tasks={tasks}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
+          onEdit={editTask}
+          onDelete={deleteTask}
         />
       </div>
     </div>
