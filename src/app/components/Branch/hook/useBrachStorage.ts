@@ -36,5 +36,16 @@ setBranches((prev)=>[newBranch, ...prev])
     const deleteBranch = useCallback((id: Branch["id"])=>{
         setBranches((prev)=>prev.filter((t)=>String(t.id)!==String(id)))
     },[])
-    return{branches, addBranch, deleteBranch}
+
+      const editBranch = useCallback(
+    (id: Branch["id"], newData: Omit<Branch, "id">) => {
+      setBranches((prev) =>
+        prev.map((t) =>
+          String(t.id) === String(id) ? { ...t, ...newData } : t,
+        ),
+      );
+    },
+    [],
+  );
+    return{branches, addBranch, deleteBranch, editBranch}
 }
