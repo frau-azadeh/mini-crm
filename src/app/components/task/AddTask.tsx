@@ -8,7 +8,6 @@ import Button from "../ui/Button";
 import ListTaskTable from "./ListTaskTable";
 
 const AddTask = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
