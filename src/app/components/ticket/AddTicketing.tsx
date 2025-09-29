@@ -9,7 +9,8 @@ import ListTicketing from "./ListTicketing";
 import { useTicketingStorage } from "./hook/useTicketingStorage";
 
 const AddTicketing: React.FC = () => {
-  const { ticketing,addTicketing, editTicketing, deleteTicketing } = useTicketingStorage();
+  const { ticketing, addTicketing, editTicketing, deleteTicketing } =
+    useTicketingStorage();
   const [form, setForm] = useState<Omit<Ticket, "id">>({
     title: "",
     description: "",
@@ -26,7 +27,7 @@ const AddTicketing: React.FC = () => {
 
   const handleAdd = useCallback(() => {
     if (!form.title.trim()) return;
-addTicketing({id: Date.now().toString(), ...form})
+    addTicketing({ id: Date.now().toString(), ...form });
     setForm({
       title: "",
       description: "",
