@@ -9,7 +9,7 @@ import ListSell from "./ListSell";
 import { useSellStorage } from "./hook/useSellStorage";
 
 const AddSell: React.FC = () => {
-  const {sells, addSell} = useSellStorage()
+  const {sells, addSell, editSell} = useSellStorage()
   const [form, setForm] = useState<Omit<Sell, "id">>({
     quantity: "",
     name: "",
@@ -46,16 +46,7 @@ const AddSell: React.FC = () => {
     setSells((prev) => prev.filter((t) => String(t.id) !== String(id)));
   }, []);
 
-  const handleEdit = useCallback(
-    (id: Sell["id"], newData: Omit<Sell, "id">) => {
-      setSells((prev) =>
-        prev.map((t) =>
-          String(t.id) === String(id) ? { ...t, ...newData } : t,
-        ),
-      );
-    },
-    [],
-  );
+
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
@@ -113,7 +104,7 @@ const AddSell: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن محصول</Button>
       </div>
-      <ListSell sells={sells} onDelete={handleDelete} onEdit={handleEdit} />
+      <ListSell sells={sells} onDelete={handleDelete} onEdit={editSell} />
     </div>
   );
 };
