@@ -9,7 +9,7 @@ import ListSell from "./ListSell";
 import { useSellStorage } from "./hook/useSellStorage";
 
 const AddSell: React.FC = () => {
-  const {sells} = useSellStorage()
+  const {sells, addSell} = useSellStorage()
   const [form, setForm] = useState<Omit<Sell, "id">>({
     quantity: "",
     name: "",
@@ -30,7 +30,7 @@ const AddSell: React.FC = () => {
 
   const handleAdd = useCallback(() => {
     if (!form.name.trim()) return;
-
+    addSell({id: Date.now().toString(),...form})
     
     setForm({
       name: "",
