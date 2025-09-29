@@ -26,7 +26,7 @@ export function useTaskStorage() {
     } catch (error) {
       console.error("خطا در نوشتن در localStorage", error);
     }
-  }, []);
+  }, [tasks]);
 
   const addTask = useCallback((newTask: Task) => {
     setTask((prev) => [newTask, ...prev]);
@@ -36,7 +36,7 @@ export function useTaskStorage() {
     (id: Task["id"]) => {
       setTask((prev) => prev.filter((t) => String(t.id) !== String(id)));
     },
-    [tasks],
+    [],
   );
 
   const editTask = useCallback((id: Task["id"], newText: string) => {
