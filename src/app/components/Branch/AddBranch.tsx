@@ -6,9 +6,12 @@ import { Branch } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListBranch from "./ListBranch";
+import { useBranchStorage } from "./hook/useBrachStorage";
 
 const AddBranch: React.FC = () => {
-  const [branches, setBranches] = useState<Branch[]>([]);
+
+  const{branches, addBranch} = useBranchStorage()
+
   const [form, setForm] = useState<Omit<Branch, "id">>({
     city: "",
     phone: "",
@@ -23,12 +26,8 @@ const AddBranch: React.FC = () => {
 
   const handleAdd = useCallback(() => {
     if (!form.city.trim()) return;
-
-    const newBranch: Branch = {
-      id: Date.now().toString(),
-      ...form,
-    };
-    setBranches((prev) => [...prev, newBranch]);
+    addBranch({id:Date.now().toString(), ...form})
+;
     setForm({
       city: "",
       phone: "",
