@@ -6,9 +6,10 @@ import { Ticket } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListTicketing from "./ListTicketing";
+import { useTicketingStorage } from "./hook/useTicketingStorage";
 
 const AddTicketing: React.FC = () => {
-  const [ticket, setTicket] = useState<Ticket[]>([]);
+  const {ticketing} = useTicketingStorage()
   const [form, setForm] = useState<Omit<Ticket, "id">>({
     title: "",
     description: "",
@@ -25,12 +26,7 @@ const AddTicketing: React.FC = () => {
 
   const handleAdd = useCallback(() => {
     if (!form.title.trim()) return;
-    const newText: Ticket = {
-      id: Date.now().toString(),
-      title: form.title,
-      description: form.description,
-    };
-    setTicket((prev) => [...prev, newText]);
+
     setForm({
       title: "",
       description: "",
