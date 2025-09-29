@@ -9,9 +9,9 @@ export function useSellStorage(){
 
     useEffect(()=>{
         try {
-            const row = localStorage.getItem(STORAGE_KEY)
-            if(!row) return
-            const parsed = JSON.parse(row) as Sell[] | null
+            const raw = localStorage.getItem(STORAGE_KEY)
+            if(!raw) return
+            const parsed = JSON.parse(raw) as Sell[] | null
             if(Array.isArray(parsed)) setSells(parsed)
             
         } catch (error) {
@@ -25,7 +25,7 @@ export function useSellStorage(){
         } catch (error) {
             console.error("خطا در نوشتن در localStorage", error)
         }
-    },[])
+    },[sells])
 
     const addSell = useCallback((newSell: Sell)=>{
         setSells((prev)=>[newSell,...prev])
