@@ -11,7 +11,7 @@ import SearchBoxAutocomplete from "./SearchBoxAutocomplete";
 import { useLeadStorage } from "./hook/useLeadStorage";
 
 const AddLead: React.FC = () => {
-  const {leads} = useLeadStorage()
+  const {leads, addLead} = useLeadStorage()
   const [form, setForm] = useState<Omit<Lead, "id">>({
     name: "",
     family: "",
@@ -28,12 +28,8 @@ const AddLead: React.FC = () => {
   }, []);
 
   const handleAdd = useCallback(() => {
-    if (!form.name.trim()) return;
-    const newLead: Lead = {
-      id: Date.now().toString(),
-      ...form,
-    };
-    setLeads((prev) => [...prev, newLead]);
+    if(!form.name.trim())return
+    addLead({id: Date.now().toString(), ...form})
     setForm({
       name: "",
       family: "",
