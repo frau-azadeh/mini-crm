@@ -7,8 +7,9 @@ import Button from "../ui/Button";
 interface ListSellTableProps {
   sells: Sell[];
   onDelete?: (id: Sell["id"]) => void;
+  onEdit?:(id: Sell["id"], newData: Omit<Sell, "id">) => void
 }
-const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete }) => {
+const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete , onEdit}) => {
   const [editingId, setEditingId] = useState<Sell["id"] | null>(null);
   const [editData, setEditData] = useState<Omit<Sell, "id"> | null>(null);
 
@@ -30,6 +31,33 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete }) => {
     },
     [editData],
   );
+
+  const handleCancelEdit = useCallback(()=>{
+    setEditingId(null)
+    setEditData(null)
+  },[])
+
+  const handleStartEdit = useCallback((sell: Sell)=>{
+    setEditingId(sell.id);
+    setEditData({
+      name:sell.name,
+      quantity: sell.quantity,
+      madeIn: sell.madeIn,
+      sellPrice: sell.sellPrice,
+      purchesPrice: sell.purchesPrice,
+      description: sell.description
+    })
+
+  },[])
+
+  const handleSaveEdit = useCallback(()=>{
+    if(editingId === null || !editData) return
+
+    onEdit?.(editingId, editData)
+    setEditingId(null)
+    setEditData(null)
+    
+  },[editData, editingId, onEdit])
 
   return (
     <div className="mt-4">
@@ -85,21 +113,27 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete }) => {
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
                   {String(editingId) === String(sell.id) ? (
-                    <input name="name" value={editData?.name ?? ""} />
+                    <input name="name" value={editData?.name ?? ""} 
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange}/>
                   ) : (
                     <span>{sell.name}</span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
                   {String(editingId) === String(sell.id) ? (
-                    <input name="quantity" value={editData?.quantity ?? ""} />
+                    <input name="quantity" value={editData?.quantity ?? ""}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange} />
                   ) : (
                     <span>{sell.quantity}</span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
                   {String(editingId) === String(sell.id) ? (
-                    <input name="madeIn" value={editData?.madeIn ?? ""} />
+                    <input name="madeIn" value={editData?.madeIn ?? ""}
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange} />
                   ) : (
                     <span>{sell.madeIn}</span>
                   )}
@@ -109,6 +143,8 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete }) => {
                     <input
                       name="purchesPrice"
                       value={editData?.purchesPrice ?? ""}
+                        className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange}
                     />
                   ) : (
                     <span>{sell.purchesPrice}</span>
@@ -116,26 +152,55 @@ const ListSell: React.FC<ListSellTableProps> = ({ sells, onDelete }) => {
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
                   {String(editData) === String(sell.id) ? (
-                    <input name="sellPrice" value={editData?.sellPrice ?? ""} />
+                    <input name="sellPrice" value={editData?.sellPrice ?? ""} 
+                      className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange}/>
                   ) : (
                     <span>{sell.sellPrice}</span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
+                 {String(editData) === String(sell.id)?(
+<input
+name="description"
+value={editData?.description??""}
+  className="w-full border rounded px-2 py-1 text-sm"
+                      onChange={handleFieldChange}
+
+/>
+                 ):(
                   <span>{sell.description}</span>
+
+                 )}
                 </td>
                 <td className="px-4 py-3 text-right text-sm text-gray-600">
-                  <div className="flex items-center justify-center gap-2">
-                    <Button variant="call">ویرایش</Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDelete(sell.id)}
-                    >
-                      حذف
-                    </Button>
-                  </div>
-                </td>
-              </tr>
+                 {String(editingId) === String(sell.id) ? (
+                                     <div className="flex items-center justify-center gap-2">
+                                       <Button onClick={handleSaveEdit} variant="call">
+                                         ذخیره
+                                       </Button>
+                                       <Button onClick={handleCancelEdit} variant="danger">
+                                         انصراف
+                                       </Button>
+                                     </div>
+                                   ) : (
+                                     <div className="flex items-center justify-center gap-2">
+                                       <Button
+                                         variant="call"
+                                         onClick={() => handleStartEdit(sell)}
+                                       >
+                                         ویرایش
+                                       </Button>
+                                       <Button
+                                         variant="danger"
+                                         onClick={() => handleDelete(sell.id)}
+                                       >
+                                         حذف
+                                       </Button>
+                                     </div>
+                                   )}
+                                   </td>
+                                   </tr>
             ))}
           </tbody>
         </table>
