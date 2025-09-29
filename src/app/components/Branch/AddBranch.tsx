@@ -10,7 +10,7 @@ import { useBranchStorage } from "./hook/useBrachStorage";
 
 const AddBranch: React.FC = () => {
 
-  const{branches, addBranch} = useBranchStorage()
+  const{branches, addBranch, deleteBranch, editBranch} = useBranchStorage()
 
   const [form, setForm] = useState<Omit<Branch, "id">>({
     city: "",
@@ -36,20 +36,9 @@ const AddBranch: React.FC = () => {
     });
   }, [form]);
 
-  const handleDelete = useCallback((id: Branch["id"]) => {
-    setBranches((prev) => prev.filter((t) => String(t.id) !== String(id)));
-  }, []);
 
-  const handleEdit = useCallback(
-    (id: Branch["id"], newData: Omit<Branch, "id">) => {
-      setBranches((prev) =>
-        prev.map((t) =>
-          String(t.id) === String(id) ? { ...t, ...newData } : t,
-        ),
-      );
-    },
-    [],
-  );
+
+
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg rounded-xl md:p-8">
@@ -93,8 +82,8 @@ const AddBranch: React.FC = () => {
       </div>
       <ListBranch
         branches={branches}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
+        onDelete={deleteBranch}
+        onEdit={editBranch}
       />
     </div>
   );
