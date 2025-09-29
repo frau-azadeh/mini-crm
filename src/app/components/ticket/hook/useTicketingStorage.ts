@@ -16,7 +16,7 @@ export function useTicketingStorage() {
     } catch (error) {
       console.error("خطا در خواندن از localStorage", error);
     }
-  },[]);
+  }, []);
 
   useEffect(() => {
     try {
