@@ -2,13 +2,14 @@
 
 import React, { useCallback, useState } from "react";
 
-import { Lead, Sell } from "@/types/types";
+import { Sell } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListSell from "./ListSell";
+import { useSellStorage } from "./hook/useSellStorage";
 
 const AddSell: React.FC = () => {
-  const [sells, setSells] = useState<Sell[]>([]);
+  const {sells} = useSellStorage()
   const [form, setForm] = useState<Omit<Sell, "id">>({
     quantity: "",
     name: "",
@@ -30,11 +31,7 @@ const AddSell: React.FC = () => {
   const handleAdd = useCallback(() => {
     if (!form.name.trim()) return;
 
-    const newSell: Sell = {
-      id: Date.now().toString(),
-      ...form,
-    };
-    setSells((prev) => [...prev, newSell]);
+    
     setForm({
       name: "",
       quantity: "",
