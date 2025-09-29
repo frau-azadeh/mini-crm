@@ -6,7 +6,7 @@ import { Admin } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListAdmin from "./ListAdmin";
-import { useAdminStorage } from "./useAdminStorage";
+import { useAdminStorage } from "./hook/useAdminStorage";
 
 const AddAdmin: React.FC = () => {
   const { admins, addAdmin, deleteAdmin, editAdmin, clearAdmins } =
