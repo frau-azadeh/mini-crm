@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useCallback, useMemo, useState } from "react";
+
 import { Lead } from "@/types/types";
+
 import Button from "../ui/Button";
 import ListLead from "./ListLead";
 import SearchBox from "./SearchBox";
@@ -42,11 +44,16 @@ const AddLead: React.FC = () => {
     setLeads((prev) => prev.filter((t) => String(t.id) !== String(id)));
   }, []);
 
-  const handleEdit = useCallback((id: Lead["id"], newData: Omit<Lead, "id">) => {
-    setLeads((prev) =>
-      prev.map((t) => (String(t.id) === String(id) ? { ...t, ...newData } : t)),
-    );
-  }, []);
+  const handleEdit = useCallback(
+    (id: Lead["id"], newData: Omit<Lead, "id">) => {
+      setLeads((prev) =>
+        prev.map((t) =>
+          String(t.id) === String(id) ? { ...t, ...newData } : t,
+        ),
+      );
+    },
+    [],
+  );
 
   // فیلتر کردن لیست بر اساس searchTerm (name, family, phone, address)
   const filteredLeads = useMemo(() => {
@@ -98,10 +105,18 @@ const AddLead: React.FC = () => {
       </div>
 
       {/* اینجا کامپوننت سرچ جداست */}
-      <SearchBox value={searchTerm} onChange={setSearchTerm} placeholder="جستجو در سرنخ‌ها..." />
+      <SearchBox
+        value={searchTerm}
+        onChange={setSearchTerm}
+        placeholder="جستجو در سرنخ‌ها..."
+      />
 
       {/* لیست فیلترشده به ListLead پاس داده میشه */}
-      <ListLead leads={filteredLeads} onDelete={handleDelete} onEdit={handleEdit} />
+      <ListLead
+        leads={filteredLeads}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+      />
     </div>
   );
 };
