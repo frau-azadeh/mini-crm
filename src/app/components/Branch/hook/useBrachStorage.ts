@@ -33,5 +33,8 @@ export function useBranchStorage(){
 setBranches((prev)=>[newBranch, ...prev])
     },[])
 
-    return{branches, addBranch}
+    const deleteBranch = useCallback((id: Branch["id"])=>{
+        setBranches((prev)=>prev.filter((t)=>String(t.id)!==String(id)))
+    },[])
+    return{branches, addBranch, deleteBranch}
 }
