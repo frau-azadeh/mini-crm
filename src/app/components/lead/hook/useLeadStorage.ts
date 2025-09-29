@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { Lead } from "@/types/types";
 
@@ -26,5 +26,9 @@ export function useLeadStorage() {
     }
   }, [leads]);
 
-  return { leads };
+  const addLead = useCallback((newLeads: Lead)=>{
+    setLeads((prev)=>[newLeads, ...prev])
+  },[])
+
+  return { leads, addLead };
 }
