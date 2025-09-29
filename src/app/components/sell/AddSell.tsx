@@ -9,7 +9,7 @@ import ListSell from "./ListSell";
 import { useSellStorage } from "./hook/useSellStorage";
 
 const AddSell: React.FC = () => {
-  const {sells, addSell, editSell} = useSellStorage()
+  const {sells, addSell, editSell, deleteSell} = useSellStorage()
   const [form, setForm] = useState<Omit<Sell, "id">>({
     quantity: "",
     name: "",
@@ -42,9 +42,7 @@ const AddSell: React.FC = () => {
     });
   }, [form]);
 
-  const handleDelete = useCallback((id: Sell["id"]) => {
-    setSells((prev) => prev.filter((t) => String(t.id) !== String(id)));
-  }, []);
+
 
 
 
@@ -104,7 +102,7 @@ const AddSell: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن محصول</Button>
       </div>
-      <ListSell sells={sells} onDelete={handleDelete} onEdit={editSell} />
+      <ListSell sells={sells} onDelete={deleteSell} onEdit={editSell} />
     </div>
   );
 };
