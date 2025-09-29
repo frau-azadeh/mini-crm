@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 
-import { Sell } from "@/types/types";
+import { Lead, Sell } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListSell from "./ListSell";
@@ -44,6 +44,21 @@ const AddSell: React.FC = () => {
       purchesPrice: "",
     });
   }, [form]);
+
+  const handleDelete = useCallback((id: Sell["id"]) => {
+    setSells((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
+
+  const handleEdit = useCallback(
+    (id: Sell["id"], newData: Omit<Sell, "id">) => {
+      setSells((prev) =>
+        prev.map((t) =>
+          String(t.id) === String(id) ? { ...t, ...newData } : t,
+        ),
+      );
+    },
+    [],
+  );
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
@@ -101,7 +116,7 @@ const AddSell: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن محصول</Button>
       </div>
-      <ListSell sells={sells} />
+      <ListSell sells={sells} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 };
