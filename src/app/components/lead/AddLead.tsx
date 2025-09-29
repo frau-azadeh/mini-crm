@@ -94,6 +94,7 @@ const AddLead: React.FC = () => {
         placeholder="جستجو در سرنخ‌ها..."
       />
       <SearchBoxAutocomplete
+      
         value={searchTerm}
         onChange={setSearchTerm}
         items={leads}
