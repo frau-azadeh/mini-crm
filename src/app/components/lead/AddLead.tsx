@@ -8,9 +8,10 @@ import Button from "../ui/Button";
 import ListLead from "./ListLead";
 import SearchBox from "./SearchBox";
 import SearchBoxAutocomplete from "./SearchBoxAutocomplete";
+import { useLeadStorage } from "./hook/useLeadStorage";
 
 const AddLead: React.FC = () => {
-  const [leads, setLeads] = useState<Lead[]>([]);
+  const {leads} = useLeadStorage()
   const [form, setForm] = useState<Omit<Lead, "id">>({
     name: "",
     family: "",
