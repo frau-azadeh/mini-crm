@@ -9,7 +9,7 @@ import ListTaskTable from "./ListTaskTable";
 import { useTaskStorage } from "./hook/useTaskStorage";
 
 const AddTask = () => {
-  const {tasks, addTask, deleteTask, editTask} = useTaskStorage()
+  const { tasks, addTask, deleteTask, editTask } = useTaskStorage();
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,10 +23,6 @@ const AddTask = () => {
     addTask({ id, text: trimmed });
     setInputValue("");
   }, [inputValue, addTask]);
-
-
-
-
 
   return (
     <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
@@ -44,11 +40,7 @@ const AddTask = () => {
         <div className="flex gap-2 items-center mb-4">
           <Button onClick={handleAddTask}>اضافه</Button>
         </div>
-        <ListTaskTable
-          tasks={tasks}
-          onEdit={editTask}
-          onDelete={deleteTask}
-        />
+        <ListTaskTable tasks={tasks} onEdit={editTask} onDelete={deleteTask} />
       </div>
     </div>
   );
