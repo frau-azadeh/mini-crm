@@ -33,13 +33,13 @@ export function useTaskStorage() {
     setTask((prev)=>[newTask, ...prev])
   }, [])
 
-  const deleteTask = useCallback(()=>{
-
+  const deleteTask = useCallback((id: Task["id"])=>{
+    setTask((prev)=>prev.filter((t)=>String(t.id)!== String(id)))
   },[])
 
   const editTask = useCallback(()=>{
 
   },[])
 
-  return{tasks, addTask}
+  return{tasks, addTask, deleteTask}
 }
