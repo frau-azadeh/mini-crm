@@ -7,6 +7,7 @@ import { Lead } from "@/types/types";
 import Button from "../ui/Button";
 import ListLead from "./ListLead";
 import SearchBox from "./SearchBox";
+import SearchBoxAutocomplete from "./SearchBoxAutocomplete";
 
 const AddLead: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -110,7 +111,13 @@ const AddLead: React.FC = () => {
         onChange={setSearchTerm}
         placeholder="جستجو در سرنخ‌ها..."
       />
-
+<SearchBoxAutocomplete
+          value={searchTerm}
+          onChange={setSearchTerm}
+          items={leads}
+          // fields اختیاری است؛ اگر ندی از name,family,phone,address استفاده می‌شود
+          placeholder="جستجو (کلیک روی پیشنهاد مقدار را پر می‌کند)"
+        />
       {/* لیست فیلترشده به ListLead پاس داده میشه */}
       <ListLead
         leads={filteredLeads}
