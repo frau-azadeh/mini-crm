@@ -32,12 +32,9 @@ export function useTaskStorage() {
     setTask((prev) => [newTask, ...prev]);
   }, []);
 
-  const deleteTask = useCallback(
-    (id: Task["id"]) => {
-      setTask((prev) => prev.filter((t) => String(t.id) !== String(id)));
-    },
-    [],
-  );
+  const deleteTask = useCallback((id: Task["id"]) => {
+    setTask((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
 
   const editTask = useCallback((id: Task["id"], newText: string) => {
     setTask((prev) =>
