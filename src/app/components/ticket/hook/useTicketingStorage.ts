@@ -9,30 +9,46 @@ export function useTicketingStorage() {
 
   useEffect(() => {
     try {
-        const raw = localStorage.getItem(STORAGE_KEY)
-        if(!raw) return
-        const parsed = JSON.parse(raw) as Ticket[]| null
-        if(Array.isArray(parsed)) setTicketing(parsed)
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as Ticket[] | null;
+      if (Array.isArray(parsed)) setTicketing(parsed);
     } catch (error) {
-        console.error("خطا در خواندن از localStorage",error)
+      console.error("خطا در خواندن از localStorage", error);
     }
-  });
+  },[]);
 
   useEffect(() => {
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(ticketing))
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ticketing));
     } catch (error) {
-        console.error("خطا از نوشتن در localStorage",error)
+      console.error("خطا از نوشتن در localStorage", error);
     }
   }, [ticketing]);
 
-  const addTicketing = useCallback((newTicket: Ticket)=>{
-    setTicketing((prev)=>[newTicket, ...prev])
-  },[])
+  const addTicketing = useCallback((newData: Ticket) => {
+    setTicketing((prev) => [newData, ...prev]);
+  }, []);
 
-  const deleteTicketing = useCallback((id: Ticket["id"])=>{
-    setTicketing((prev)=>prev.filter((t)=>String(t.id)!==String(id)))
-  },[])
+  const deleteTicketing = useCallback((id: Ticket["id"]) => {
+    setTicketing((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
 
-  return { ticketing, addTicketing, deleteTicketing };
+  const editTicketing = useCallback(
+    (id: Ticket["id"], newTicketing: Omit<Ticket, "id">) => {
+      setTicketing((prev) =>
+        prev.map((t) =>
+          String(t.id) === String(id)
+            ? {
+                ...t,
+                ...newTicketing,
+              }
+            : t,
+        ),
+      );
+    },
+    [],
+  );
+
+  return { ticketing, addTicketing, deleteTicketing, editTicketing };
 }
