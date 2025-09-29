@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
+
 import { Admin } from "@/types/types";
+
 import Button from "../ui/Button";
 import ListAdmin from "./ListAdmin";
 import { useAdminStorage } from "./useAdminStorage";
 
 const AddAdmin: React.FC = () => {
-  const { admins, addAdmin, deleteAdmin, editAdmin, clearAdmins } = useAdminStorage();
+  const { admins, addAdmin, deleteAdmin, editAdmin, clearAdmins } =
+    useAdminStorage();
 
   const [form, setForm] = useState<Omit<Admin, "id">>({
     name: "",
