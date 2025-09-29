@@ -34,5 +34,11 @@ export function useLeadStorage() {
     setLeads((prev)=>prev.filter((t)=>String(t.id)!==String(id)))
   },[])
 
-  return { leads, addLead, deleteLead };
+  const handleEdit = useCallback((id: Lead["id"], newData: Omit<Lead, "id"> )=>{
+    setLeads((prev)=>prev.map((t)=>
+    String(t.id) === String(id) ? {...t, ...newData} : t
+    ))
+  },[])
+
+  return { leads, addLead, deleteLead, handleEdit };
 }
