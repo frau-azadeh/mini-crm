@@ -45,9 +45,9 @@ const AddSell: React.FC = () => {
     });
   }, [form]);
 
-  const handleDelete = useCallback((id: Lead["id"])=>{
-    setSells((prev)=>prev.filter((t)=>String(t.id)!==String(id)))
-  },[])
+  const handleDelete = useCallback((id: Lead["id"]) => {
+    setSells((prev) => prev.filter((t) => String(t.id) !== String(id)));
+  }, []);
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-xl rounded-xl p-6 md:p-8">
@@ -105,7 +105,7 @@ const AddSell: React.FC = () => {
         />
         <Button onClick={handleAdd}>افزودن محصول</Button>
       </div>
-      <ListSell sells={sells} onDelete={handleDelete}/>
+      <ListSell sells={sells} onDelete={handleDelete} />
     </div>
   );
 };
