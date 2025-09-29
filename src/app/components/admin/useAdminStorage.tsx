@@ -1,4 +1,5 @@
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+
 import { Admin } from "@/types/types";
 
 // کلید استفاده شده در localStorage
@@ -23,7 +24,7 @@ export function useAdminStorage() {
   // 🟢 ذخیره خودکار در localStorage هر بار که state admins تغییر کند
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(admins)); 
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(admins));
       // تبدیل آرایه به JSON و ذخیره در localStorage
     } catch (e) {
       console.error("خطا در نوشتن در localStorage:", e);
@@ -37,17 +38,22 @@ export function useAdminStorage() {
 
   // 🟢 حذف ادمین بر اساس id
   const deleteAdmin = useCallback((id: Admin["id"]) => {
-    setAdmins((prev) => prev.filter((t) => String(t.id) !== String(id))); 
+    setAdmins((prev) => prev.filter((t) => String(t.id) !== String(id)));
     // فیلتر کردن ادمین‌ها و حذف آنی
   }, []);
 
   // 🟢 ویرایش ادمین
-  const editAdmin = useCallback((id: Admin["id"], newData: Omit<Admin, "id">) => {
-    setAdmins((prev) =>
-      prev.map((t) => (String(t.id) === String(id) ? { ...t, ...newData } : t))
-    );
-    // اگر id برابر بود، اطلاعات جدید را جایگزین می‌کنیم، در غیر این صورت بدون تغییر می‌ماند
-  }, []);
+  const editAdmin = useCallback(
+    (id: Admin["id"], newData: Omit<Admin, "id">) => {
+      setAdmins((prev) =>
+        prev.map((t) =>
+          String(t.id) === String(id) ? { ...t, ...newData } : t,
+        ),
+      );
+      // اگر id برابر بود، اطلاعات جدید را جایگزین می‌کنیم، در غیر این صورت بدون تغییر می‌ماند
+    },
+    [],
+  );
 
   // 🟢 پاک کردن همه داده‌ها و localStorage
   const clearAdmins = useCallback(() => {
