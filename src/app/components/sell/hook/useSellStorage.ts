@@ -31,5 +31,12 @@ export function useSellStorage(){
         setSells((prev)=>[newSell,...prev])
     },[])
 
-    return{sells, addSell}
+    const editSell = useCallback((id: Sell["id"], newData: Omit<Sell, "id">)=>{
+        setSells((prev)=>prev.map((t)=>
+        String(t.id) === String(id)?
+        {...t, ...newData}:t
+        ))
+    },[])
+
+    return{sells, addSell, editSell}
 }
