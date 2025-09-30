@@ -110,7 +110,10 @@ const apply = (s: string) =>{
       {open && setSuggests.length > 0 && (
         <ul className="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-md max-h-48 overflow-auto z-50">
           {suggests.map((s,i)=>(
-            <li key={`${s}-${i}`}>
+            <li key={`${s}-${i}`}
+                          className={`px-3 py-2 text-sm cursor-pointer ${i === active ? "bg-indigo-50" : "hover:bg-gray-100"}`} // 🔹 استایل آیتم فعال و هاور
+
+            >
               {s}
             </li>
           ))}
