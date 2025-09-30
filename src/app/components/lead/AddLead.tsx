@@ -87,12 +87,12 @@ const AddLead: React.FC = () => {
         <Button onClick={handleAdd}>افزودن سرنخ</Button>
       </div>
 
-      {/* اینجا کامپوننت سرچ جداست */}
+      {/* اینجا کامپوننت سرچ جداست 
       <SearchBox
         value={searchTerm}
         onChange={setSearchTerm}
         placeholder="جستجو در سرنخ‌ها..."
-      />
+      />*/}
       <SearchBoxAutocomplete
       
         value={searchTerm}
