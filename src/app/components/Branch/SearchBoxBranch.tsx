@@ -1,5 +1,5 @@
 import { Branch } from '@/types/types'
-import React from 'react'
+import React, { useRef } from 'react'
 
 type BranchesSearchProps = {
     items: Branch[]
@@ -17,8 +17,15 @@ const SearchBoxBranch:React.FC<BranchesSearchProps> = ({
     debounceMs = 200,
     field = ["city", "status"]
 }) => {
+
+    const rootRef = useRef<HTMLDivElement | null>(null)
+    const inputRef = useRef<HTMLInputElement | null>(null)
+    const timerRef = useRef<ReturnType<typeof setTimeout>>(null)
+
   return (
-    <div>SearchBoxBranch</div>
+    <div ref={rootRef}>
+        <input ref={inputRef}/>
+    </div>
   )
 }
 
