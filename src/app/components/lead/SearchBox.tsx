@@ -36,7 +36,7 @@ export default function SearchBox({
       value={local}
       onChange={(e) => setLocal(e.target.value)}
       placeholder={placeholder}
-      className="w-full mb-4 p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
+      className="bg-white w-full mb-4 p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:outline-none transition"
       aria-label="search"
     />
   );
