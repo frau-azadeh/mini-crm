@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Admin } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListAdmin from "./ListAdmin";
+import SearchBoxAdmin from "./SearchBoxAdmin";
 import { useAdminStorage } from "./hook/useAdminStorage";
 
 const AddAdmin: React.FC = () => {
   const { admins, addAdmin, deleteAdmin, editAdmin, clearAdmins } =
     useAdminStorage();
-
+  const [searchAdmin, setSearchAdmin] = useState("");
   const [form, setForm] = useState<Omit<Admin, "id">>({
     name: "",
     family: "",
@@ -29,6 +30,16 @@ const AddAdmin: React.FC = () => {
     addAdmin({ id: Date.now().toString(), ...form });
     setForm({ name: "", family: "", userName: "", password: "" });
   };
+
+  const filteredAdmin = useMemo(() => {
+    if (!searchAdmin.trim()) return admins;
+    const q = searchAdmin.toLowerCase();
+    return admins.filter((admin) =>
+      [admin.name, admin.family].some((v) =>
+        String(v).toLowerCase().includes(q),
+      ),
+    );
+  }, [admins, searchAdmin]);
 
   return (
     <div className="md:mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow rounded-xl p-6 md:p-8 mr-2 ml-2 mt-5">
@@ -77,8 +88,16 @@ const AddAdmin: React.FC = () => {
           </Button>
         </div>
       </div>
-
-      <ListAdmin admins={admins} onDelete={deleteAdmin} onEdit={editAdmin} />
+      <SearchBoxAdmin
+        items={admins}
+        value={searchAdmin}
+        onChange={setSearchAdmin}
+      />
+      <ListAdmin
+        admins={filteredAdmin}
+        onDelete={deleteAdmin}
+        onEdit={editAdmin}
+      />
     </div>
   );
 };

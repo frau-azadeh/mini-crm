@@ -6,7 +6,7 @@ import { Lead } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListLead from "./ListLead";
-import SearchBox from "./SearchBox";
+// import SearchBox from "./SearchBox";
 import SearchBoxAutocomplete from "./SearchBoxAutocomplete";
 import { useLeadStorage } from "./hook/useLeadStorage";
 
@@ -39,14 +39,27 @@ const AddLead: React.FC = () => {
   }, [form]);
 
   // فیلتر کردن لیست بر اساس searchTerm (name, family, phone, address)
+  // 🔹 useMemo: استفاده شده تا فقط وقتی `leads` یا `searchTerm` تغییر کنند،
+  //    این محاسبه دوباره انجام شود و عملکرد بهتری داشته باشیم
   const filteredLeads = useMemo(() => {
+    // 🔹 اگر `searchTerm` خالی یا فقط فاصله باشد، همان leads اصلی را برگردان
     if (!searchTerm.trim()) return leads;
+
+    // 🔹 متن جستجو را به حروف کوچک تبدیل می‌کنیم تا جستجو case-insensitive باشد
     const q = searchTerm.toLowerCase();
+
+    // 🔹 فیلتر کردن آرایه leads
     return leads.filter((lead) =>
+      // 🔹 some: بررسی می‌کند آیا **حداقل یک عنصر** از آرایه true بدهد
       [lead.name, lead.family, lead.phone, lead.address].some((v) =>
+        // 🔹 String(v): تبدیل مقدار به رشته در صورت undefined یا number بودن
+        // 🔹 toLowerCase(): همه حروف را کوچک می‌کند تا جستجو بدون توجه به حروف بزرگ/کوچک انجام شود
+        // 🔹 includes(q): بررسی می‌کند آیا رشته شامل متن جستجو هست یا نه
         String(v).toLowerCase().includes(q),
       ),
     );
+
+    // 🔹 وابستگی‌ها: هر بار که `leads` یا `searchTerm` تغییر کنند، محاسبه دوباره انجام می‌شود
   }, [leads, searchTerm]);
 
   return (
@@ -88,7 +101,7 @@ const AddLead: React.FC = () => {
       </div>
 
       {/* اینجا کامپوننت سرچ جداست 
-      <SearchBox
+      <SearchBox  
         value={searchTerm}
         onChange={setSearchTerm}
         placeholder="جستجو در سرنخ‌ها..."
