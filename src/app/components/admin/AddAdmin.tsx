@@ -7,6 +7,7 @@ import { Admin } from "@/types/types";
 import Button from "../ui/Button";
 import ListAdmin from "./ListAdmin";
 import { useAdminStorage } from "./hook/useAdminStorage";
+import SearchBoxAdmin from "./SearchBoxAdmin";
 
 const AddAdmin: React.FC = () => {
   const { admins, addAdmin, deleteAdmin, editAdmin, clearAdmins } =
@@ -76,8 +77,11 @@ const AddAdmin: React.FC = () => {
             حذف همه
           </Button>
         </div>
+      
       </div>
-
+  <SearchBoxAdmin
+          items={admins}
+        />
       <ListAdmin admins={admins} onDelete={deleteAdmin} onEdit={editAdmin} />
     </div>
   );
