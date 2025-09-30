@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 
 // ---------------------------
 // SearchBoxAutocomplete.tsx
@@ -53,30 +53,27 @@ export default function SearchBoxAutocomplete({
   // 3️⃣ جمع آوری مقادیر برای پیشنهاد
   // ==========================
   // 🔹 flatValues: آرایه‌ای شامل تمام مقادیر فیلدهای مشخص شده از items
-  const flatValues = items
-    .flatMap((it) =>
-      // 🔹 گرفتن مقادیر فیلدهای مشخص شده برای هر آیتم
-      fields
-        .map((f) => it[f])
-        // 🔹 حذف مقادیر undefined یا null
-        .filter((v) => v !== undefined && v !== null)
-        // 🔹 تبدیل همه مقادیر به رشته
-        .map(String),
-    )
-    // 🔹 یکتا کردن مقادیر (حذف مقادیر تکراری)
-    .filter((v, i, arr) => arr.indexOf(v) === i);
+  const flatValues = useMemo(() => {
+    // 🔹 جمع‌آوری تمام مقادیر فیلدهای مشخص شده از items
+    return items
+      .flatMap((it) =>
+        fields
+          .map((f) => it[f])
+          .filter((v) => v !== undefined && v !== null) // 🔹 حذف مقادیر null یا undefined
+          .map(String), // 🔹 تبدیل همه مقادیر به رشته
+      )
+      .filter((v, i, arr) => arr.indexOf(v) === i); // 🔹 یکتا کردن مقادیر
+  }, [items, fields]); // 🔹 فقط وقتی items یا fields تغییر کنند محاسبه می‌شود
 
-  // 🔹 تابع computeSuggestions برای محاسبه پیشنهادها بر اساس متن جستجو
-  const computeSuggestions = (q: string) => {
-    // 🔹 trim کردن متن و تبدیل به حروف کوچک برای مقایسه
-    const t = q.trim().toLowerCase();
-
-    // 🔹 اگر متن خالی باشد، هیچ پیشنهادی باز نمی‌گرداند
-    if (!t) return [];
-
-    // 🔹 فیلتر مقادیر flatValues که شامل متن تایپ شده باشند، و حداکثر 10 مورد
-    return flatValues.filter((s) => s.toLowerCase().includes(t)).slice(0, 10);
-  };
+  const computeSuggestions = useCallback(
+    (q: string) => {
+      const t = q.trim().toLowerCase();
+      if (!t) return [];
+      // 🔹 فیلتر مقادیر flatValues که شامل متن تایپ شده باشند، حداکثر 10 مورد
+      return flatValues.filter((s) => s.toLowerCase().includes(t)).slice(0, 10);
+    },
+    [flatValues], // 🔹 فقط وقتی flatValues تغییر کند، تابع دوباره ساخته می‌شود
+  );
 
   // ==========================
   // 4️⃣ Debounce و بروزرسانی لیست
