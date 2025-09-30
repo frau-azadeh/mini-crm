@@ -1,13 +1,25 @@
 import { Admin } from '@/types/types'
 import React from 'react'
-import Button from '../ui/Button'
 
 type SearchBoxAdminProps ={
     items: Admin[]
+    value: string;
+    onChange: (v:string) => void
+    fields?: Array<keyof Pick<Admin,"name"|"family">>
+    placeholder?: string
+    debounceMs?: number
 
 }
 
-const SearchBoxAdmin:React.FC<SearchBoxAdminProps> = ({items}) => {
+
+const SearchBoxAdmin:React.FC<SearchBoxAdminProps> = ({
+    value,
+    items,
+    onChange,
+    placeholder = "جستجو ...",
+    fields = ["name", "family"],
+    debounceMs = 200,
+}) => {
   return (
     <div className='relative mt-4'>
         <input
