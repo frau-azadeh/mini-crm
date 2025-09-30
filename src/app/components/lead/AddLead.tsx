@@ -88,7 +88,7 @@ const AddLead: React.FC = () => {
       </div>
 
       {/* اینجا کامپوننت سرچ جداست 
-      <SearchBox
+      <SearchBox  
         value={searchTerm}
         onChange={setSearchTerm}
         placeholder="جستجو در سرنخ‌ها..."
