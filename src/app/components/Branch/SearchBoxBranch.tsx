@@ -1,5 +1,5 @@
 import { Branch } from '@/types/types'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 
 type BranchesSearchProps = {
     items: Branch[]
@@ -21,7 +21,13 @@ const SearchBoxBranch:React.FC<BranchesSearchProps> = ({
     const rootRef = useRef<HTMLDivElement | null>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
     const timerRef = useRef<ReturnType<typeof setTimeout>>(null)
+    const lastSentRef = useRef<string | null>(null)
 
+    const [local, setLocal] = useState<string>(value)
+    const [suggests, setSuggests] = useState <string[]>([])
+    const [open, setOpen] = useState<boolean>(false)
+    const [active, setActive] = useState<number>(-1)
+    
   return (
     <div ref={rootRef}>
         <input ref={inputRef}/>
