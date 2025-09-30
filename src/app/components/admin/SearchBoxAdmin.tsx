@@ -82,6 +82,35 @@ const apply = (s: string) =>{
     inputRef.current?.focus()
 }
 
+const onKeyDown = (e:React.KeyboardEvent<HTMLInputElement>)=>{
+  if(e.key === "ArrowDown"){
+    e.preventDefault();
+    if(!open && suggests.length>0){
+      setOpen(true)
+      setActive(0)
+         }else{
+          setActive((a)=> Math.min(a+1, suggests.length-1))
+         }
+  }else if(e.key === "ArrowUp"){
+    e.preventDefault()
+    setActive((a)=>Math.max(a-1,0))
+  }
+  else if(e.key === "Enter"){
+    if(active >= 0 && active< suggests.length){
+      e.preventDefault()
+      apply(suggests[active])
+    }
+  }
+    else if (e.key === "Escape"){
+      if(timeRef.current) clearTimeout(timeRef.current)
+        setOpen(false)
+      setActive(-1)
+      inputRef.current?.blur()
+    }
+
+  }
+
+
 
 
   return (
@@ -99,6 +128,7 @@ const apply = (s: string) =>{
           setActive(next.length > 0? 0:-1)
           setOpen(next.length>0)
         }}
+        onKeyDown={onKeyDown}
       />
 
       <button
