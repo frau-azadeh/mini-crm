@@ -1,5 +1,5 @@
 import { Branch } from '@/types/types'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 
 type BranchesSearchProps = {
     items: Branch[]
@@ -39,6 +39,13 @@ const SearchBoxBranch:React.FC<BranchesSearchProps> = ({
             )
             .filter((v, i, arr)=> arr.indexOf(v)=== i)
     }, [items, fields])
+
+    const computeSuggestions = useCallback((q: string)=>{
+        const t = q.trim().toLowerCase();
+        if(!t) return[]
+        return flatValues.filter((s)=> s.toLowerCase().includes(t)).slice(0,10)    
+    
+    },[flatValues])
 
   return (
     <div ref={rootRef}>
