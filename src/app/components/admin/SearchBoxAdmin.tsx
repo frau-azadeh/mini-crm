@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { Admin } from "@/types/types";
 
@@ -44,12 +44,39 @@ const SearchBoxAdmin: React.FC<SearchBoxAdminProps> = ({
 
     },[items, fields])
 
-    
+    const computeSuggestions = useCallback(
+        (q: string) => {
+            const t = q.trim().toLowerCase()
+            if(!t) return[]
+
+            return flatValues.filter((s)=>s.toLowerCase().includes(t)).slice(0,10)
+     
+    },[flatValues])
+
+useEffect(()=>{
+  if(timeRef.current) clearTimeout(timeRef.current)
+    timeRef.current = setTimeout(()=>{
+      const next = computeSuggestions(local)
+      setSuggests(next)
+      setActive((prev)=>
+        prev >= 0 && prev< next.length ? prev: next.length> 0? 0 :-1
+      )
+      setOpen(next.length>0)
+      if(lastSentRef.current !== local)
+        lastSentRef.current = local
+      onChange(local)
+
+    }, debounceMs)
+    return()=>{
+      if(timeRef.current) clearTimeout(timeRef.current)
+    }
+},[local, onChange, debounceMs, computeSuggestions])
 
   return (
     <div ref={rootRef} className="relative mt-4">
       <input
         value={local}
+        onChange={(e)=> setLocal(e.target.value)}
         ref={inputRef}
         placeholder={placeholder}
         type="text"
