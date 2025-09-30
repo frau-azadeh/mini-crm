@@ -72,6 +72,16 @@ useEffect(()=>{
     }
 },[local, onChange, debounceMs, computeSuggestions])
 
+const apply = (s: string) =>{
+  if(timeRef.current) clearTimeout(timeRef.current)
+    setLocal(s)
+    lastSentRef.current = s
+    onChange(s)
+    setOpen(false)
+    setActive(-1)
+    inputRef.current?.focus()
+}
+
   return (
     <div ref={rootRef} className="relative mt-4">
       <input
@@ -81,6 +91,12 @@ useEffect(()=>{
         placeholder={placeholder}
         type="text"
         className="w-full bg-white border border-gray-300 rounded-md px-3 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-indigo-400" // 🔹 استایل با Tailwind
+        onFocus={()=>{
+          const next = computeSuggestions(local)
+          setSuggests(next)
+          setActive(next.length > 0? 0:-1)
+          setOpen(next.length>0)
+        }}
       />
 
       <button
