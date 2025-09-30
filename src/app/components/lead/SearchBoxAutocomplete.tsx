@@ -51,7 +51,9 @@ export default function SearchBoxAutocomplete({
   const [suggests, setSuggests] = useState<string[]>([]); // 🔹 لیست پیشنهادها
   const [open, setOpen] = useState<boolean>(false); // 🔹 آیا لیست باز است؟
   const [active, setActive] = useState<number>(-1); // 🔹 آیتم انتخاب شده با کیبورد یا موس
-
+//-1 یعنی هیچ آیتمی انتخاب نشده
+//0 یعنی آیتم اول
+//1 یعنی آیتم دوم
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null); // 🔹 تایمر debounce
   const lastSentRef = useRef<string | null>(null); // 🔹 آخرین مقدار فرستاده شده به والد
 
@@ -62,14 +64,17 @@ export default function SearchBoxAutocomplete({
   const flatValues = useMemo(() => {
     // 🔹 جمع‌آوری تمام مقادیر فیلدهای مشخص شده از items
     return items
-      .flatMap(
+      .flatMap(//
+//map فقط [1,2] → [ [1,2], [2,4], [3,6] ] می‌ساخت.
+
+//flatMap یک سطح آرایه را صاف می‌کند → [1,2,2,4,3,6].
         (it) =>
           fields
             .map((f) => it[f])
             .filter((v) => v !== undefined && v !== null) // 🔹 حذف مقادیر null یا undefined
             .map(String), // 🔹 تبدیل همه مقادیر به رشته
       )
-      .filter((v, i, arr) => arr.indexOf(v) === i); // 🔹 یکتا کردن مقادیر
+      .filter((v, i, arr) => arr.indexOf(v) === i); // 🔹 یکتا کردن مقادیرفقط اولین بار که این مقدار دیده شد اجازه عبور دارد.
   }, [items, fields]); // 🔹 فقط وقتی items یا fields تغییر کنند محاسبه می‌شود
 
   const computeSuggestions = useCallback(
