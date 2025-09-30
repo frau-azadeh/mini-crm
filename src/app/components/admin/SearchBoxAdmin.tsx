@@ -82,6 +82,8 @@ const apply = (s: string) =>{
     inputRef.current?.focus()
 }
 
+
+
   return (
     <div ref={rootRef} className="relative mt-4">
       <input
@@ -105,6 +107,15 @@ const apply = (s: string) =>{
       >
         ✕
       </button>
+      {open && setSuggests.length > 0 && (
+        <ul className="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-md max-h-48 overflow-auto z-50">
+          {suggests.map((s,i)=>(
+            <li key={`${s}-${i}`}>
+              {s}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
