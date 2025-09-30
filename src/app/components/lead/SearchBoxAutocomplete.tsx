@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 // ---------------------------
 // SearchBoxAutocomplete.tsx
@@ -56,11 +62,12 @@ export default function SearchBoxAutocomplete({
   const flatValues = useMemo(() => {
     // 🔹 جمع‌آوری تمام مقادیر فیلدهای مشخص شده از items
     return items
-      .flatMap((it) =>
-        fields
-          .map((f) => it[f])
-          .filter((v) => v !== undefined && v !== null) // 🔹 حذف مقادیر null یا undefined
-          .map(String), // 🔹 تبدیل همه مقادیر به رشته
+      .flatMap(
+        (it) =>
+          fields
+            .map((f) => it[f])
+            .filter((v) => v !== undefined && v !== null) // 🔹 حذف مقادیر null یا undefined
+            .map(String), // 🔹 تبدیل همه مقادیر به رشته
       )
       .filter((v, i, arr) => arr.indexOf(v) === i); // 🔹 یکتا کردن مقادیر
   }, [items, fields]); // 🔹 فقط وقتی items یا fields تغییر کنند محاسبه می‌شود
