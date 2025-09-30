@@ -110,7 +110,16 @@ const onKeyDown = (e:React.KeyboardEvent<HTMLInputElement>)=>{
 
   }
 
-
+const handleClear = () =>{
+  if(timeRef.current) clearTimeout(timeRef.current)
+    setLocal("")
+  lastSentRef.current = ""
+  onChange ("")
+  setSuggests([])
+  setOpen(false)
+  setActive(-1)
+  inputRef.current?.focus()
+}
 
 
   return (
@@ -132,6 +141,7 @@ const onKeyDown = (e:React.KeyboardEvent<HTMLInputElement>)=>{
       />
 
       <button
+      onClick={handleClear}
         type="button"
         className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded-md text-sm" // 🔹 استایل با Tailwind
       >
