@@ -1,5 +1,5 @@
 import { Branch } from '@/types/types'
-import React, { useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 
 type BranchesSearchProps = {
     items: Branch[]
@@ -7,7 +7,7 @@ type BranchesSearchProps = {
     onChange: (v: string) => void
     placeholder?: string
     debounceMs?: number
-    field?: Array <keyof Pick<Branch, "city" | "status">>
+    fields?: Array <keyof Pick<Branch, "city" | "status">>
 }
 const SearchBoxBranch:React.FC<BranchesSearchProps> = ({
     items,
@@ -15,7 +15,7 @@ const SearchBoxBranch:React.FC<BranchesSearchProps> = ({
     onChange,
     placeholder = "جستجو ...",
     debounceMs = 200,
-    field = ["city", "status"]
+    fields = ["city", "status"]
 }) => {
 
     const rootRef = useRef<HTMLDivElement | null>(null)
@@ -27,7 +27,19 @@ const SearchBoxBranch:React.FC<BranchesSearchProps> = ({
     const [suggests, setSuggests] = useState <string[]>([])
     const [open, setOpen] = useState<boolean>(false)
     const [active, setActive] = useState<number>(-1)
-    
+
+    const flatValues = useMemo (()=>{
+        return items
+            .flatMap(
+                (it)=>
+                     fields
+                     .map((f) => it[f])
+                    .filter((v) => v !== undefined && v!== null)
+                    .map(String)
+            )
+            .filter((v, i, arr)=> arr.indexOf(v)=== i)
+    }, [items, fields])
+
   return (
     <div ref={rootRef}>
         <input ref={inputRef}/>
