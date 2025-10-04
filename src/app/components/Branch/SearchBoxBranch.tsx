@@ -127,7 +127,51 @@ const SearchBoxBranch:React.FC<BranchSearchProps> = ({
   };
 
   return (
-    <div>SearchBoxBranch</div>
+    <div ref={rootRef} className='relative'>
+        <input
+            ref={inputRef}
+            type='text'
+            value={local}
+            onChange={(e)=> setLocal(e.target.value)}
+              onKeyDown={onKeyDown} 
+        placeholder={placeholder} 
+        className="w-full bg-white border border-gray-300 rounded-md px-3 py-2 pr-12 focus:outline-none focus:ring-2 focus:ring-indigo-400" // 🔹 استایل با Tailwind
+     onFocus={()=>{
+        const next = computeSuggestions(local)
+        setSuggests(next)
+        setActive(next.length>0 ? 0:-1)
+        setOpen(next.length>0)
+     }}
+        />
+        <button
+            type='button'
+            onClick={handleClear}
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded-md text-sm" // 🔹 استایل با Tailwind
+
+        >
+
+              ✕
+        </button>
+        {open && suggests.length> 0 &&(
+                    <ul className="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-md max-h-48 overflow-auto z-50">
+{suggests.map((s, i)=>(
+       <li
+              key={`${s}-${i}`} // 🔹 کلید یکتا برای هر آیتم
+              onMouseDown={(ev) => {
+                ev.preventDefault(); // 🔹 جلوگیری از blur قبل از کلیک
+                apply(s); // 🔹 اعمال مقدار انتخاب شده
+              }}
+              onMouseEnter={() => setActive(i)} // 🔹 هنگام هاور، آیتم فعال تغییر می‌کند
+              className={`px-3 py-2 text-sm cursor-pointer ${i === active ? "bg-indigo-50" : "hover:bg-gray-100"}`} // 🔹 استایل آیتم فعال و هاور
+            >
+              {s} {/* 🔹 متن پیشنهاد */}
+            </li>
+
+))}
+</ul>
+        )}
+        
+    </div>
   )
 }
 
