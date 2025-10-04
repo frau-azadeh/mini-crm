@@ -1,5 +1,5 @@
 import { Branch } from '@/types/types'
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 
 interface BranchSearchProps{
     items: Branch[]
@@ -28,6 +28,26 @@ const SearchBoxBranch:React.FC<BranchSearchProps> = ({
     const [suggests, setSuggests] = useState<string[]>([])
     const [open, setOpen] = useState<boolean>(false)
     const [active, setActive] = useState<number>(-1)
+
+    const flatValues = useMemo(()=>{
+        return items
+        .flatMap(
+            (it)=>
+                fields
+                    .map((f)=>it[f])
+                    .filter((v)=> v !== undefined && v !== null)
+                    .map(String)
+        )
+        .filter((v, i, arr) => arr.indexOf(v) === i)
+    },[items, fields])
+
+    const computeSuggestions = useCallback((q: string)=>{
+        const t = q.trim().toLowerCase()
+        if(!t) return[]
+
+        return flatValues.filter((s) => s.toLowerCase().includes(t)).slice(0,10)
+    },[flatValues])
+
 
   return (
     <div>SearchBoxBranch</div>
