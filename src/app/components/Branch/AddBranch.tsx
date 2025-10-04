@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 
 import { Branch } from "@/types/types";
 
 import Button from "../ui/Button";
 import ListBranch from "./ListBranch";
 import { useBranchStorage } from "./hook/useBrachStorage";
+import SearchBoxBranch from "./SearchBoxBranch";
 
 const AddBranch: React.FC = () => {
   const { branches, addBranch, deleteBranch, editBranch } = useBranchStorage();
-
+  const [searchTerm, setSearchTerm] = useState("")
   const [form, setForm] = useState<Omit<Branch, "id">>({
     city: "",
     phone: "",
@@ -33,6 +34,18 @@ const AddBranch: React.FC = () => {
       status: "",
     });
   }, [form]);
+
+  const filteredBranch = useMemo(()=>{
+    if(!searchTerm.trim()) return branches
+
+    const q = searchTerm.trim().toLowerCase()
+    return branches.filter((branches)=>{
+      [branches.city, branches.status].some((v)=>{
+        String(v).toLowerCase().includes(q)
+      })
+    })
+
+  },[branches, setSearchTerm])
 
   return (
     <div className="mx-auto max-w-4xl bg-gradient-to-br from-slate-900 to-slate-950 shadow-lg rounded-xl md:p-8">
@@ -74,8 +87,13 @@ const AddBranch: React.FC = () => {
 
         <Button onClick={handleAdd}>ذخیره</Button>
       </div>
+      <SearchBoxBranch
+        value={searchTerm}
+        onChange={setSearchTerm}
+        items={branches}
+      />
       <ListBranch
-        branches={branches}
+        branches={filteredBranch}
         onDelete={deleteBranch}
         onEdit={editBranch}
       />
