@@ -1,5 +1,6 @@
 import { Branch } from '@/types/types'
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import { time } from 'console';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 interface BranchSearchProps{
     items: Branch[]
@@ -21,7 +22,7 @@ const SearchBoxBranch:React.FC<BranchSearchProps> = ({
 
     const rootRef = useRef<HTMLDivElement | null>(null)
     const inputRef = useRef<HTMLInputElement | null>(null)
-    const timeTef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    const timeRef = useRef<ReturnType<typeof setTimeout> | null>(null)
     const lastSentRef = useRef<string | null>(null)
 
     const [local, setLocal] = useState<string>(value)
@@ -48,7 +49,26 @@ const SearchBoxBranch:React.FC<BranchSearchProps> = ({
         return flatValues.filter((s) => s.toLowerCase().includes(t)).slice(0,10)
     },[flatValues])
 
+    useEffect(()=>{
+        if (timeRef.current) clearTimeout(timeRef.current)
+            timeRef.current = setTimeout(()=>{
+                const next = computeSuggestions(local)
+                setSuggests(next)
+                setActive((prev)=>
+                    prev >= 0 && prev < next.length ?
+                    prev : next.length > 0 ? 0 : -1,
+                )
+                setOpen(next.length > 0)
 
+                if(lastSentRef.current !== local){
+                    lastSentRef.current = local
+                    onChange(local)
+                }
+        }, debounceMs)
+        return() =>{
+            if(timeRef.current) clearTimeout(timeRef.current)
+        }
+    },[local, computeSuggestions, debounceMs, onChange])
   return (
     <div>SearchBoxBranch</div>
   )
