@@ -15,7 +15,7 @@ type BranchSearchProps = {
   fields?: Array<keyof Pick<Branch, "city" | "status">>;
   placeholder?: string;
   debounceMs?: number;
-}
+};
 
 const SearchBoxBranch: React.FC<BranchSearchProps> = ({
   value,
@@ -27,7 +27,7 @@ const SearchBoxBranch: React.FC<BranchSearchProps> = ({
 }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const timeRef = useRef<ReturnType<typeof setTimeout> >(null);
+  const timeRef = useRef<ReturnType<typeof setTimeout>>(null);
   const lastSentRef = useRef<string | null>(null);
 
   const [local, setLocal] = useState<string>(value);
@@ -67,10 +67,8 @@ const SearchBoxBranch: React.FC<BranchSearchProps> = ({
       );
       setOpen(next.length > 0);
 
-      if (lastSentRef.current !== local) 
-        lastSentRef.current = local;
-        onChange(local);
-   
+      if (lastSentRef.current !== local) lastSentRef.current = local;
+      onChange(local);
     }, debounceMs);
     return () => {
       if (timeRef.current) clearTimeout(timeRef.current);
@@ -159,7 +157,6 @@ const SearchBoxBranch: React.FC<BranchSearchProps> = ({
           {suggests.map((s, i) => (
             <li
               key={`${s}-${i}`}
-            
               className={`px-3 py-2 text-sm cursor-pointer ${i === active ? "bg-indigo-50" : "hover:bg-gray-100"}`} // 🔹 استایل آیتم فعال و هاور
             >
               {s}
