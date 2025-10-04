@@ -41,11 +41,11 @@ const AddBranch: React.FC = () => {
     const q = searchBranch.trim().toLowerCase();
     return branches.filter((branch) =>
       [branch.city, branch.status].some((v) =>
-        String(v ?? "" )
+        String(v ?? "")
           .toLowerCase()
-          .includes(q)     
-         )
-  )
+          .includes(q),
+      ),
+    );
   }, [branches, searchBranch]);
 
   return (
