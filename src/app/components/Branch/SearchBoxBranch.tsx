@@ -69,6 +69,18 @@ const SearchBoxBranch:React.FC<BranchSearchProps> = ({
             if(timeRef.current) clearTimeout(timeRef.current)
         }
     },[local, computeSuggestions, debounceMs, onChange])
+
+    const apply = (s: string) =>{
+        if(timeRef.current) clearTimeout(timeRef.current)
+            setLocal(s)
+            lastSentRef.current = s
+            onChange(s)
+            setOpen(false)
+            setActive(-1)
+
+            inputRef.current?.focus()
+    }
+
   return (
     <div>SearchBoxBranch</div>
   )
