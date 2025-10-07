@@ -8,8 +8,6 @@ export const apiClient = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-
-
 // ساده: interceptor برای لاگ و خطاها
 apiClient.interceptors.response.use(
   (res) => res,
