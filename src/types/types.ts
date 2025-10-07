@@ -50,9 +50,9 @@ export type Post = {
   body: string;
 };
 
-export interface Todos{
-  userId: number,
-  id: number,
-  title: string,
-  completed: boolean
+export interface Todos {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
 }
