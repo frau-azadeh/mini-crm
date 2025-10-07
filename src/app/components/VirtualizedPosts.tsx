@@ -1,7 +1,10 @@
-"use client"; // اگر این فایل در Next.js باشد، مشخص می‌کند که این یک Client Component است
+"use client";
 
+// اگر این فایل در Next.js باشد، مشخص می‌کند که این یک Client Component است
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useVirtualizer, VirtualItem } from "@tanstack/react-virtual";
+
+import { VirtualItem, useVirtualizer } from "@tanstack/react-virtual";
+
 import axios, { AxiosError } from "axios";
 
 /** تعریف نوع داده هر پست */
@@ -20,7 +23,10 @@ type Props = {
   height?: number;
 };
 
-export default function VirtualizedPosts({ duplicateFactor = 1, height = 600 }: Props) {
+export default function VirtualizedPosts({
+  duplicateFactor = 1,
+  height = 600,
+}: Props) {
   /** state برای ذخیره لیست پست‌ها */
   const [posts, setPosts] = useState<Post[]>([]);
   /** state برای مدیریت لودینگ */
@@ -35,13 +41,13 @@ export default function VirtualizedPosts({ duplicateFactor = 1, height = 600 }: 
 
     async function load() {
       setLoading(true); // شروع حالت لودینگ
-      setError(null);   // پاک کردن خطای قبلی
+      setError(null); // پاک کردن خطای قبلی
 
       try {
         // fetch داده‌ها از API با پشتیبانی از abort
         const res = await axios.get<Post[]>(
           "https://jsonplaceholder.typicode.com/posts",
-          { signal: controller.signal }
+          { signal: controller.signal },
         );
 
         if (!mounted) return; // اگر component unmount شد، کاری نکن
@@ -88,37 +94,33 @@ export default function VirtualizedPosts({ duplicateFactor = 1, height = 600 }: 
   const rowHeight = 88; // ارتفاع ثابت هر ردیف
 
   const virtualizer = useVirtualizer({
-    count: items.length,                 // تعداد آیتم‌ها
+    count: items.length, // تعداد آیتم‌ها
     getScrollElement: () => parentRef.current, // عنصر scrollable
-    estimateSize: () => rowHeight,       // ارتفاع تقریبی هر ردیف
-    overscan: 6,                         // تعداد آیتم اضافه برای smooth scroll
+    estimateSize: () => rowHeight, // ارتفاع تقریبی هر ردیف
+    overscan: 6, // تعداد آیتم اضافه برای smooth scroll
   });
 
   /** حالات مختلف UI */
   if (loading)
     return (
-      <div
-        className="max-w-4xl mx-auto mt-5 p-6 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl shadow-lg"
-      >
+      <div className="max-w-4xl mx-auto mt-5 p-6 bg-gradient-to-br from-slate-900 to-slate-950 rounded-xl shadow-lg">
         {/* نمایش لودینگ */}
-        <div className="text-center text-gray-300 animate-pulse">در حال بارگذاری...</div>
+        <div className="text-center text-gray-300 animate-pulse">
+          در حال بارگذاری...
+        </div>
       </div>
     );
 
   if (error)
     return (
-      <div
-        className="max-w-4xl mx-auto mt-5 p-6 bg-red-50 dark:bg-red-900 text-red-600 rounded-xl shadow-lg text-center"
-      >
+      <div className="max-w-4xl mx-auto mt-5 p-6 bg-red-50 dark:bg-red-900 text-red-600 rounded-xl shadow-lg text-center">
         خطا: {error}
       </div>
     );
 
   if (items.length === 0)
     return (
-      <div
-        className="max-w-4xl mx-auto mt-5 p-6 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl shadow-lg text-center"
-      >
+      <div className="max-w-4xl mx-auto mt-5 p-6 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-xl shadow-lg text-center">
         داده‌ای موجود نیست.
       </div>
     );
@@ -131,14 +133,24 @@ export default function VirtualizedPosts({ duplicateFactor = 1, height = 600 }: 
     >
       {/* هدر لیست */}
       <div className="p-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">لیست پست‌ها</h2>
-        <div className="text-sm text-gray-500 dark:text-gray-400">{items.length} آیتم</div>
+        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+          لیست پست‌ها
+        </h2>
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          {items.length} آیتم
+        </div>
       </div>
 
       {/* کانتینر scrollable */}
-      <div className="overflow-auto" ref={parentRef} style={{ height: height - 64 }}>
+      <div
+        className="overflow-auto"
+        ref={parentRef}
+        style={{ height: height - 64 }}
+      >
         {/* ارتفاع واقعی برای virtualizer */}
-        <div style={{ height: virtualizer.getTotalSize(), position: "relative" }}>
+        <div
+          style={{ height: virtualizer.getTotalSize(), position: "relative" }}
+        >
           {virtualizer.getVirtualItems().map((virtualRow: VirtualItem) => {
             const item = items[virtualRow.index];
             if (!item) return null;
