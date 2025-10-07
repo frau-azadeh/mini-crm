@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
+
 import { Todos, fetchAllTodo } from "../../../api/todosService";
 
 const AllTodoList: React.FC = () => {
