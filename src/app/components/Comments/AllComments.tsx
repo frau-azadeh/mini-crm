@@ -1,3 +1,5 @@
+"use client"
+
 import { fetchAllComments } from '@/api/commentsService'
 import { Comments } from '@/types/types'
 import React, { useEffect, useState } from 'react'
