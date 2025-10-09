@@ -57,7 +57,7 @@ export interface Todos {
   completed: boolean;
 }
 
-export interface Comments{
+export interface Comments {
   postId: number;
   id: number;
   name: string;
