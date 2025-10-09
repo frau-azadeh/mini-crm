@@ -56,3 +56,11 @@ export interface Todos {
   title: string;
   completed: boolean;
 }
+
+export interface Comments {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
+}
