@@ -1,7 +1,9 @@
-export default function AllTo(){
-    return(
-        <>
-            <h1>Todo</h1>
-        </>
-    )
+import AllTodoList from "../components/todo/AllTodo";
+
+export default function TodoPage() {
+  return (
+    <>
+      <AllTodoList />
+    </>
+  );
 }
