@@ -1,3 +1,5 @@
+"use client"
+
 import { fetchTodo, Todo } from '@/api/todoService'
 import React, { useEffect, useState } from 'react'
 
