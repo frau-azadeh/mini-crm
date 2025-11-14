@@ -5,7 +5,12 @@ export default function Home() {
     <div>
       <main>
         <h1 className="text-red-600">به پشتیبانی خوش آمدید</h1>
-        <ClassButton/>
+       <div className="flex items-center justify-center">
+        <ClassButton >
+          ورود
+          </ClassButton>
+       </div>
+
       </main>
     </div>
   );
